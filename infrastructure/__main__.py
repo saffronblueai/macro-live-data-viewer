@@ -53,11 +53,12 @@ bucket_policy = aws.s3.BucketPolicy(
                         "Principal": "*",
                         "Action": "s3:GetObject",
                         "Resource": f"{arn}/*",
-                        "Condition": {
-                            "StringNotLike": {
-                                "s3:key": "pulumi-state/*"
-                            }
-                        }
+                    },
+                    {
+                        "Effect": "Deny",
+                        "Principal": "*",
+                        "Action": "s3:GetObject",
+                        "Resource": f"{arn}/pulumi-state/*",
                     }
                 ],
             }
