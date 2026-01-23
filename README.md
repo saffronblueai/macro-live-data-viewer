@@ -92,6 +92,34 @@ python server.py --debug            # Auto-reload on file changes
 
 This project can be deployed to AWS S3 for static website hosting with automated CI/CD.
 
+
+### 🔐 Security Features
+
+- ✅ OIDC authentication (no AWS keys stored)
+- ✅ Temporary credentials (expire ~1 hour)
+- ✅ Scoped IAM permissions (minimal access)
+- ✅ S3 bucket with public read via website hosting
+- ✅ Secrets encrypted in GitHub
+
+### 💰 Cost Estimate
+
+**Monthly Cost: ~$0.03 - $0.50**
+
+Breakdown:
+- S3 Storage: ~$0.02
+- S3 Requests: ~$0.01
+- Data Transfer: FREE (mostly covered by free tier)
+
+### Documentation
+
+| File | Purpose |
+|------|---------|
+| `DEPLOYMENT.md` | Comprehensive step-by-step deployment guide |
+| `QUICKSTART.md` | Quick reference for common commands |
+| `ARCHITECTURE.md` | System architecture & data flow diagrams |
+| `SETUP_SUMMARY.md` | Overview of what was created |
+| `PRE_DEPLOYMENT_CHECKLIST.md` | Pre-deployment verification checklist |
+
 ### Prerequisites
 
 1. **AWS Account** with appropriate permissions
