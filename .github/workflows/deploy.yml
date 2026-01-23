@@ -56,14 +56,13 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p ~/.pulumi
-          aws s3 sync s3://macro-live-data-viewer-bucket/pulumi-state/ ~/.pulumi/ || echo "No existing Pulumi state in S3"
+          aws s3 sync s3://macro-live-data-viewer-bucket/pulumi-state/ ~/.pulumi/ \
+            --exclude "plugins/*" || echo "No existing Pulumi state in S3"
 
-      - name: Fix Pulumi plugin permissions
+      - name: Clean up any incomplete plugins
         run: |
-          if [ -d "$HOME/.pulumi/plugins" ]; then
-            chmod +x $HOME/.pulumi/plugins/*/pulumi-resource-* || true
-            echo "Fixed permissions on Pulumi plugins"
-          fi
+          rm -rf $HOME/.pulumi/plugins/resource-aws-* || true
+          echo "Cleaned up incomplete plugins"
 
       - name: Deploy infrastructure with Pulumi
         working-directory: ./infrastructure
@@ -105,7 +104,9 @@ jobs:
         if: always()
         run: |
           if [ -d "$HOME/.pulumi" ]; then
-            aws s3 sync $HOME/.pulumi/ s3://macro-live-data-viewer-bucket/pulumi-state/ --delete
+            aws s3 sync $HOME/.pulumi/ s3://macro-live-data-viewer-bucket/pulumi-state/ \
+              --exclude "plugins/*" \
+              --delete
             echo "Pulumi state uploaded to S3 bucket: s3://macro-live-data-viewer-bucket/pulumi-state/"
           else
             echo "No ~/.pulumi directory to upload"
