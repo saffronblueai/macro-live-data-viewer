@@ -58,6 +58,13 @@ jobs:
           mkdir -p ~/.pulumi
           aws s3 sync s3://macro-live-data-viewer-bucket/pulumi-state/ ~/.pulumi/ || echo "No existing Pulumi state in S3"
 
+      - name: Fix Pulumi plugin permissions
+        run: |
+          if [ -d "$HOME/.pulumi/plugins" ]; then
+            chmod +x $HOME/.pulumi/plugins/*/pulumi-resource-* || true
+            echo "Fixed permissions on Pulumi plugins"
+          fi
+
       - name: Deploy infrastructure with Pulumi
         working-directory: ./infrastructure
         env:
