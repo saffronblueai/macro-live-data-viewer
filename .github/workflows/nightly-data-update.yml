@@ -63,7 +63,6 @@ jobs:
         continue-on-error: true
         run: |
           python src/fetch_data.py update
-          python src/fetch_data.py generate
 
       - name: Upload updated data to S3
         run: |
