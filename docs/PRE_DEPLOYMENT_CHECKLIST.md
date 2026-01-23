@@ -21,8 +21,8 @@ Complete this checklist before deploying to production.
 ## AWS Account Setup
 
 - [ ] AWS account ID noted: `________________`
-- [ ] IAM user created with programmatic access (if not using OIDC)
-- [ ] OIDC provider configured (recommended)
+- [ ] IAM user created with programmatic access
+- [ ] Access keys generated (Access Key ID + Secret Access Key)
 - [ ] IAM role created: `GitHubActionsRole-macro-live-data-viewer`
 - [ ] IAM policies attached (S3, IAM)
 - [ ] Service limits checked (S3 buckets)
@@ -39,9 +39,13 @@ Complete this checklist before deploying to production.
 
 Create these secrets in GitHub (Settings → Secrets):
 
-- [ ] `AWS_ROLE_ARN`
-  - Format: `arn:aws:iam::123456789012:role/GitHubActionsRole-macro-live-data-viewer`
+- [ ] `AWS_ACCESS_KEY_ID`
+  - From: IAM console → Users → {user} → Security credentials → Access keys
   - Value: `________________`
+
+- [ ] `AWS_SECRET_ACCESS_KEY`
+  - From: IAM console → Users → {user} → Security credentials → Access keys
+  - Value: `[redacted]`
 
 - [ ] `PULUMI_CONFIG_PASSPHRASE`
   - Any secure string for state encryption

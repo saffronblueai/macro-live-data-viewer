@@ -133,7 +133,7 @@ open $(pulumi stack output website_url)
 
 ## GitHub Actions Setup
 
-### Step 1: Configure AWS for OIDC
+### Step 1: Create AWS IAM User with Access Keys
 
 This allows GitHub Actions to authenticate with AWS securely without storing credentials.
 
@@ -411,7 +411,7 @@ pulumi stack rm dev
 - [Pulumi Documentation](https://www.pulumi.com/docs/)
 - [AWS S3 Static Website Hosting](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [OIDC in GitHub Actions](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+- [AWS IAM User Security Credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
 
 ---
 

@@ -95,11 +95,10 @@ This project can be deployed to AWS S3 for static website hosting with automated
 
 ### 🔐 Security Features
 
-- ✅ OIDC authentication (no AWS keys stored)
-- ✅ Temporary credentials (expire ~1 hour)
-- ✅ Scoped IAM permissions (minimal access)
+- ✅ AWS secret key authentication (encrypted in GitHub)
+- ✅ Scoped IAM permissions (S3 only)
 - ✅ S3 bucket with public read via website hosting
-- ✅ Secrets encrypted in GitHub
+- ✅ Secrets encrypted and masked in GitHub Actions
 
 ### 💰 Cost Estimate
 
@@ -122,10 +121,10 @@ Breakdown:
 
 ### Prerequisites
 
-1. **AWS Account** with appropriate permissions
+1. **AWS Account** with IAM user credentials
 2. **Pulumi** installed: `pip install pulumi`
 3. **GitHub Account** with repository access
-4. **AWS Credentials** configured or use OIDC
+4. **AWS Access Key ID and Secret Access Key** for IAM user
 
 ### Local Deployment (Development)
 
@@ -149,20 +148,24 @@ pulumi stack output bucket_name         # S3 bucket name
 
 ### GitHub Actions Automated Deployment
 
-#### Set up AWS IAM Role for OIDC
+#### Create AWS IAM User with Access Keys
 
-1. **Create IAM Role** in AWS Console:
-   - Go to IAM → Roles → Create Role
-   - Trust entity type: Web identity
-   - Provider: Token.actions.githubusercontent.com
-   - Audience: `sts.amazonaws.com`
-   - Subject: `repo:YOUR_GITHUB_ORG/macro-live-data-viewer:ref:refs/heads/main`
+1. **Create IAM User** in AWS Console:
+   - Go to IAM → Users → Create User
+   - Username: `github-actions-macro-viewer` (or similar)
+   - Uncheck "Provide user access to AWS Management Console"
 
-2. **Attach Policies** to the role:
-   - S3 full access: `AmazonS3FullAccess`
-   - Or create custom policy (see below)
+2. **Create Access Keys**:
+   - Select the user, go to Security credentials tab
+   - Click "Create access key"
+   - Select "Command line interface (CLI)"
+   - Copy the Access Key ID and Secret Access Key
 
-**Custom IAM Policy** (recommended):
+3. **Attach Policy to user**:
+   - Go to user → Permissions → Add permissions
+   - Use policy below (recommended) or `AmazonS3FullAccess`
+
+**Custom IAM Policy** (recommended for minimal permissions):
 ```json
 {
   "Version": "2012-10-17",
@@ -175,19 +178,12 @@ pulumi stack output bucket_name         # S3 bucket name
         "s3:GetBucket*",
         "s3:ListBucket*",
         "s3:PutObject*",
-        "s3:DeleteObject*"
+        "s3:DeleteObject*",
+        "s3:PutBucketWebsite",
+        "s3:PutBucketPolicy",
+        "s3:GetBucketPolicy"
       ],
       "Resource": "arn:aws:s3:::macro-live-data-viewer*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "iam:GetRole",
-        "iam:CreateRole",
-        "iam:PutRolePolicy",
-        "iam:GetRolePolicy"
-      ],
-      "Resource": "*"
     }
   ]
 }
@@ -198,7 +194,8 @@ pulumi stack output bucket_name         # S3 bucket name
 1. Go to GitHub repo → Settings → Secrets and variables → Actions
 2. Add the following secrets:
 
-   - `AWS_ROLE_ARN`: `arn:aws:iam::YOUR_ACCOUNT_ID:role/YourGitHubActionsRole`
+   - `AWS_ACCESS_KEY_ID`: From IAM user access keys
+   - `AWS_SECRET_ACCESS_KEY`: From IAM user access keys
    - `PULUMI_CONFIG_PASSPHRASE`: Any passphrase for Pulumi state encryption
 
 #### Workflows
@@ -260,9 +257,9 @@ pulumi destroy
 ### Troubleshooting
 
 **Deployment fails with permission errors:**
-- Verify IAM role has correct policies
-- Check AWS_ROLE_ARN is correct
-- Ensure OIDC provider is configured
+- Verify IAM user has correct S3 policies
+- Check AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are correct
+- Verify keys are not expired or revoked in AWS Console
 
 **Website not updating after push:**
 - Check GitHub Actions workflow logs for S3 sync errors

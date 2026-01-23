@@ -66,7 +66,7 @@ Your Macro Live Data Viewer has been transformed from a local server application
 2. **THEN:** `DEPLOYMENT.md`
    - 20-30 min read
    - Complete step-by-step guide
-   - AWS OIDC configuration
+   - AWS IAM user with access keys created
    - GitHub secrets setup
 
 3. **REFERENCE:** `QUICKSTART.md`
@@ -129,9 +129,10 @@ python deploy.py
 
 ### Step 4: Setup GitHub Secrets
 
-Get values for these two secrets:
-1. `AWS_ROLE_ARN` - From AWS IAM console
-2. `PULUMI_CONFIG_PASSPHRASE` - Any secure string
+Get values for these three secrets:
+1. `AWS_ACCESS_KEY_ID` - From AWS IAM user
+2. `AWS_SECRET_ACCESS_KEY` - From AWS IAM user
+3. `PULUMI_CONFIG_PASSPHRASE` - Any secure string
 
 ### Step 5: Push to GitHub
 
@@ -176,7 +177,7 @@ Creates and manages:
 Triggers: Push to main/develop or manual
 Actions:
   1. Checkout code
-  2. Configure AWS OIDC
+  2. Create AWS IAM user with access keys
   3. Run: pulumi up
   4. Sync files to S3
   5. Update S3 website configuration
@@ -202,8 +203,8 @@ Time: ~5-15 minutes
 
 ### Authentication
 
-- **OIDC** - No AWS keys stored in GitHub
-- **Temporary Credentials** - Expire after ~1 hour
+- **Security** - HTTPS, secret keys, minimal IAM permissions
+- **Authentication** - AWS secret key credentials (encrypted in GitHub)
 - **Scoped Permissions** - Minimal required access only
 
 ### Data Protection
@@ -378,7 +379,7 @@ After setup, verify:
 - [ ] GitHub repository created
 - [ ] DEPLOYMENT.md reviewed
 - [ ] AWS account ID noted
-- [ ] OIDC provider configured
+- [ ] AWS IAM user created with access keys
 - [ ] IAM role created
 - [ ] GitHub secrets set
 - [ ] Local deployment successful

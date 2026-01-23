@@ -34,7 +34,7 @@
         │                    │      │                             │
         │ • Checkout code    │      │ • Download from S3          │
         │ • Setup Python     │      │ • Run fetch scripts         │
-        │ • AWS OIDC auth    │      │ • Regenerate data.js        │
+        │ • AWS secret keys  │      │ • Regenerate data.js        │
         │ • Pulumi up        │      │ • Upload to S3              │
         │ • Sync to S3       │      │ • Commit & push (optional)  │
         └────────────────────┘      └─────────────────────────────┘
@@ -44,7 +44,7 @@
                                 │
                                 ▼
                     ┌─────────────────────────────┐
-                    │  AWS IAM (OIDC Provider)    │
+                    │  AWS IAM (User with Access Keys) │
                     │  GitHubActionsRole          │
                     │  • S3 permissions           │
                     └─────────────────────────────┘
@@ -169,7 +169,7 @@ GitHub Actions Triggered (deploy.yml)
     │
     ├─ Checkout Code [~5 sec]
     ├─ Setup Python [~10 sec]
-    ├─ Configure AWS OIDC [~5 sec]
+    ├─ Configure AWS credentials [~5 sec]
     ├─ Pulumi Up [~30-60 sec]
     │  ├─ Create/update S3 bucket
     │  ├─ Upload website files
@@ -194,7 +194,7 @@ GitHub Actions Triggered (nightly-data-update.yml)
     │
     ├─ Checkout Code [~5 sec]
     ├─ Setup Python [~10 sec]
-    ├─ Configure AWS OIDC [~5 sec]
+    ├─ Configure AWS credentials [~5 sec]
     │
     ├─ Download from S3 [~10 sec]
     │  └─ Existing CSV files
@@ -279,12 +279,11 @@ GitHub Repository
     │  ├─ AWS_ROLE_ARN
     │  └─ PULUMI_CONFIG_PASSPHRASE
     │
-    └─ OIDC Flow
+    └─ Secret Key Authentication Flow
         │
-        ├─ GitHub generates JWT token
-        ├─ AWS verifies token signature
-        ├─ AWS validates subject/audience
-        └─ AWS returns temporary credentials
+        ├─ GitHub reads AWS_ACCESS_KEY_ID
+        ├─ GitHub reads AWS_SECRET_ACCESS_KEY
+        └─ AWS authenticates the request
             │
             ▼
         GitHub Actions
