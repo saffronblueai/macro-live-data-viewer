@@ -69,8 +69,8 @@ jobs:
 
       - name: Upload updated data to S3
         run: |
-          aws s3 sync data/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data/ --exclude ".gitkeep" --no-overwrite --acl public-read
-          aws s3 cp src/data.js s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/src/data.js --content-type "application/javascript" --acl public-read
+          aws s3 sync data/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data/ --exclude ".gitkeep" --no-overwrite
+          aws s3 cp src/data.js s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/src/data.js --content-type "application/javascript"
 
       - name: Commit and push updated CSV files (optional)
         continue-on-error: true

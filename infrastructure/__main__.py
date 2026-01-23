@@ -14,7 +14,6 @@ import pulumi_aws as aws
 # Create the S3 bucket for static website
 website_bucket = aws.s3.Bucket("macro-live-data-viewer-bucket",
     bucket="macro-live-data-viewer-bucket",
-    acl="public-read",
     website=aws.s3.BucketWebsiteArgs(
         index_document="index.html",
         error_document="index.html",  # Route all errors to index for SPA support

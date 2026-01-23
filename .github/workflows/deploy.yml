@@ -75,8 +75,7 @@ jobs:
           aws s3 sync . s3://${{ steps.get-bucket.outputs.BUCKET_NAME }} \
             --exclude "*" \
             --include "src/index.html" \
-            --include "src/data.js" \
-            --acl public-read
+            --include "src/data.js"
           
           # Upload CSV data files (preserve existing)
           aws s3 sync . s3://${{ steps.get-bucket.outputs.BUCKET_NAME }} \
@@ -87,8 +86,7 @@ jobs:
             --include "data/sentiment_data.csv" \
             --include "data/sentiment_data_domestic.csv" \
             --include "data/countries_tickers.csv" \
-            --no-overwrite \
-            --acl public-read
+            --no-overwrite
 
       - name: Print deployment information
         working-directory: ./infrastructure
