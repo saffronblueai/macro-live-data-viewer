@@ -77,21 +77,14 @@ jobs:
 
       - name: Upload website files to S3
         run: |
-          # Upload application files (allow overwrites)
-          aws s3 sync . s3://${{ steps.get-bucket.outputs.BUCKET_NAME }} \
-            --exclude "*" \
-            --include "src/index.html" \
-            --include "src/data.js"
+          # Upload HTML and JS files from src/ to root (flattened)
+          aws s3 cp src/index.html s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/index.html
+          aws s3 cp src/data.js s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data.js
           
-          # Upload CSV data files (preserve existing)
-          aws s3 sync . s3://${{ steps.get-bucket.outputs.BUCKET_NAME }} \
-            --exclude "*" \
-            --include "data/bond_yields_10y.csv" \
-            --include "data/stock_indices.csv" \
-            --include "data/currencies.csv" \
-            --include "data/sentiment_data.csv" \
-            --include "data/sentiment_data_domestic.csv" \
-            --include "data/countries_tickers.csv" \
+          # Upload CSV data files to root (flattened, preserve existing)
+          aws s3 sync data/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ \
+            --exclude ".gitkeep" \
+            --exclude "*.log" \
             --no-overwrite
 
       - name: Print deployment information

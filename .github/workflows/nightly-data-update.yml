@@ -50,11 +50,9 @@ jobs:
       - name: Download existing data from S3
         run: |
           mkdir -p data
-          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data/bond_yields_10y.csv data/ || echo "No existing bond_yields_10y.csv"
-          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data/stock_indices.csv data/ || echo "No existing stock_indices.csv"
-          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data/currencies.csv data/ || echo "No existing currencies.csv"
-          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data/sentiment_data.csv data/ || echo "No existing sentiment_data.csv"
-          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data/sentiment_data_domestic.csv data/ || echo "No existing sentiment_data_domestic.csv"
+          aws s3 sync s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ data/ \
+            --exclude "*" \
+            --include "*.csv" || echo "No existing CSV files in S3"
 
       - name: Update sentiment data
         continue-on-error: true
@@ -69,8 +67,11 @@ jobs:
 
       - name: Upload updated data to S3
         run: |
-          aws s3 sync data/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data/ --exclude ".gitkeep" --no-overwrite
-          aws s3 cp src/data.js s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/src/data.js --content-type "application/javascript"
+          aws s3 sync data/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ \
+            --exclude ".gitkeep" \
+            --exclude "*.log" \
+            --no-overwrite
+          aws s3 cp src/data.js s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data.js --content-type "application/javascript"
 
       - name: Commit and push updated CSV files (optional)
         continue-on-error: true
