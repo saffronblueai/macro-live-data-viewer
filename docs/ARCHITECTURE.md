@@ -277,7 +277,6 @@ GitHub Repository
     │
     ├─ Secrets (encrypted in Actions)
     │  ├─ AWS_ROLE_ARN
-    │  ├─ PULUMI_ACCESS_TOKEN
     │  └─ PULUMI_CONFIG_PASSPHRASE
     │
     └─ OIDC Flow

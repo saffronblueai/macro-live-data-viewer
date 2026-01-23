@@ -103,10 +103,7 @@ aws s3 rm s3://macro-live-data-viewer-dev-bucket/ --recursive
 # View GitHub CLI (if installed)
 gh secret list
 
-# Set secret via GitHub CLI
-gh secret set PULUMI_ACCESS_TOKEN -b "your-token"
-
-# Or set via GitHub web UI:
+# Set via GitHub web UI:
 # Settings → Secrets and variables → Actions → New secret
 ```
 

@@ -43,10 +43,6 @@ Create these secrets in GitHub (Settings → Secrets):
   - Format: `arn:aws:iam::123456789012:role/GitHubActionsRole-macro-live-data-viewer`
   - Value: `________________`
 
-- [ ] `PULUMI_ACCESS_TOKEN`
-  - Source: https://app.pulumi.com/account/tokens
-  - Value: `[redacted]`
-
 - [ ] `PULUMI_CONFIG_PASSPHRASE`
   - Any secure string for state encryption
   - Value: `[redacted]`

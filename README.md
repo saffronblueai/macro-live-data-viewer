@@ -199,7 +199,6 @@ pulumi stack output bucket_name         # S3 bucket name
 2. Add the following secrets:
 
    - `AWS_ROLE_ARN`: `arn:aws:iam::YOUR_ACCOUNT_ID:role/YourGitHubActionsRole`
-   - `PULUMI_ACCESS_TOKEN`: Generate from https://app.pulumi.com/account/tokens
    - `PULUMI_CONFIG_PASSPHRASE`: Any passphrase for Pulumi state encryption
 
 #### Workflows
@@ -273,7 +272,6 @@ pulumi destroy
 
 **Data not updating at night:**
 - Check GitHub Actions workflow logs
-- Verify PULUMI_ACCESS_TOKEN is valid
 - Check AWS credentials haven't expired
 
 ### Destruction

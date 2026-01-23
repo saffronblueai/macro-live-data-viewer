@@ -41,7 +41,6 @@ jobs:
         id: get-bucket
         working-directory: ./infrastructure
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
         run: |
           pip install pulumi pulumi-aws

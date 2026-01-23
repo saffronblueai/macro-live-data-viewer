@@ -129,10 +129,9 @@ python deploy.py
 
 ### Step 4: Setup GitHub Secrets
 
-Get values for these three secrets:
+Get values for these two secrets:
 1. `AWS_ROLE_ARN` - From AWS IAM console
-2. `PULUMI_ACCESS_TOKEN` - From https://app.pulumi.com
-3. `PULUMI_CONFIG_PASSPHRASE` - Any secure string
+2. `PULUMI_CONFIG_PASSPHRASE` - Any secure string
 
 ### Step 5: Push to GitHub
 

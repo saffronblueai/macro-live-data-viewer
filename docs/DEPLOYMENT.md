@@ -236,11 +236,6 @@ arn:aws:iam::123456789012:role/GitHubActionsRole-macro-live-data-viewer
 ```
 (Replace with your account ID and role name)
 
-**`PULUMI_ACCESS_TOKEN`**
-1. Log in to [app.pulumi.com](https://app.pulumi.com)
-2. **Settings** → **Access Tokens** → **Create token**
-3. Copy and paste the full token
-
 **`PULUMI_CONFIG_PASSPHRASE`**
 ```
 your-secure-passphrase-here
