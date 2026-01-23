@@ -21,8 +21,24 @@ website_bucket = aws.s3.Bucket("macro-live-data-viewer-bucket",
 )
 
 # ============================================================================
+# S3 Public Access Block Configuration
+# ============================================================================
+# IMPORTANT: Create this BEFORE the bucket policy so BlockPublicPolicy=False
+# is in place when we try to apply the public policy
+
+public_access_block = aws.s3.BucketPublicAccessBlock(
+    "macro-live-data-viewer-public-access",
+    bucket=website_bucket.id,
+    block_public_acls=False,
+    block_public_policy=False,
+    ignore_public_acls=False,
+    restrict_public_buckets=False,
+)
+
+# ============================================================================
 # S3 Bucket Policy to Allow Public Read Access
 # ============================================================================
+# Now safe to apply the public policy since BlockPublicPolicy=False
 
 bucket_policy = aws.s3.BucketPolicy(
     "macro-live-data-viewer-policy",
@@ -42,19 +58,7 @@ bucket_policy = aws.s3.BucketPolicy(
             }
         )
     ),
-)
-
-# ============================================================================
-# S3 Public Access Block Configuration
-# ============================================================================
-
-public_access_block = aws.s3.BucketPublicAccessBlock(
-    "macro-live-data-viewer-public-access",
-    bucket=website_bucket.id,
-    block_public_acls=False,
-    block_public_policy=False,
-    ignore_public_acls=False,
-    restrict_public_buckets=False,
+    opts=pulumi.ResourceOptions(depends_on=[public_access_block]),
 )
 
 # ============================================================================
