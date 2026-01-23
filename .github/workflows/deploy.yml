@@ -96,9 +96,12 @@ jobs:
           echo "S3 Bucket: $(pulumi stack output bucket_name)"
 
       - name: Commit Pulumi state files
+        continue-on-error: true
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add .pulumi/
-          git commit -m "chore: update pulumi state files" || echo "No state changes to commit"
-          git push
+          if [ -d ".pulumi/" ]; then
+            git add .pulumi/ && git commit -m "chore: update pulumi state files" && git push
+          else
+            echo "No .pulumi/ directory to commit"
+          fi
