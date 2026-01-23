@@ -61,18 +61,34 @@ jobs:
           pulumi stack select dev --create
           pulumi up --yes
 
+      - name: Get S3 bucket name from Pulumi
+        id: get-bucket
+        working-directory: ./infrastructure
+        env:
+          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+        run: |
+          BUCKET_NAME=$(pulumi stack output bucket_name)
+          echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_OUTPUT
+
       - name: Upload website files to S3
         run: |
-          aws s3 sync . s3://macro-live-data-viewer-bucket \
+          # Upload application files (allow overwrites)
+          aws s3 sync . s3://${{ steps.get-bucket.outputs.BUCKET_NAME }} \
             --exclude "*" \
-            --include "index.html" \
-            --include "data.js" \
-            --include "bond_yields_10y.csv" \
-            --include "stock_indices.csv" \
-            --include "currencies.csv" \
-            --include "sentiment_data.csv" \
-            --include "sentiment_data_domestic.csv" \
-            --include "countries_tickers.csv" \
+            --include "src/index.html" \
+            --include "src/data.js" \
+            --acl public-read
+          
+          # Upload CSV data files (preserve existing)
+          aws s3 sync . s3://${{ steps.get-bucket.outputs.BUCKET_NAME }} \
+            --exclude "*" \
+            --include "data/bond_yields_10y.csv" \
+            --include "data/stock_indices.csv" \
+            --include "data/currencies.csv" \
+            --include "data/sentiment_data.csv" \
+            --include "data/sentiment_data_domestic.csv" \
+            --include "data/countries_tickers.csv" \
+            --no-overwrite \
             --acl public-read
 
       - name: Print deployment information
