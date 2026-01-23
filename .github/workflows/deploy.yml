@@ -9,7 +9,6 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
 jobs:
   deploy:
