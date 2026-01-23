@@ -139,9 +139,6 @@ cd infrastructure
 # Set up stack
 pulumi stack init dev
 
-# Configure AWS region (optional, defaults to us-east-1)
-pulumi config set aws:region us-east-1
-
 # Deploy
 pulumi up
 

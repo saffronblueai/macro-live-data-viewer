@@ -82,17 +82,14 @@ pulumi stack init dev
 # pulumi login
 ```
 
-### Step 4: Configure Stack
+### Step 4: Preview Deployment
 
 ```bash
-# Set AWS region (optional, defaults to us-east-1)
-pulumi config set aws:region us-east-1
-
-# (Optional) Set encryption passphrase for sensitive data
-pulumi config set --secret db_password "your-secret-password"
+# Preview the infrastructure changes
+pulumi preview
 ```
 
-### Step 5: Preview Deployment
+### Step 5: Deploy Infrastructure
 
 ```bash
 # Preview what will be created
