@@ -1,0 +1,8 @@
+name: macro-live-data-viewer
+runtime: python
+description: AWS S3 static website hosting for Macro Live Data Viewer Dashboard
+
+config:
+  aws:region:
+    description: AWS region for deployment
+    default: us-east-1

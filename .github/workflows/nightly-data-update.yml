@@ -1,0 +1,91 @@
+name: Nightly Data Fetch and Update
+
+on:
+  schedule:
+    # Run every evening at 8 PM UTC (adjust as needed)
+    - cron: "0 20 * * *"
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  update-data:
+    name: Fetch Data and Update S3
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Get S3 bucket name from Pulumi
+        id: get-bucket
+        working-directory: ./infrastructure
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+        run: |
+          pip install pulumi pulumi-aws
+          BUCKET_NAME=$(pulumi stack output bucket_name)
+          echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_OUTPUT
+
+      - name: Download existing data from S3
+        run: |
+          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/bond_yields_10y.csv . || echo "No existing bond_yields_10y.csv"
+          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/stock_indices.csv . || echo "No existing stock_indices.csv"
+          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/currencies.csv . || echo "No existing currencies.csv"
+          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/sentiment_data.csv . || echo "No existing sentiment_data.csv"
+          aws s3 cp s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/sentiment_data_domestic.csv . || echo "No existing sentiment_data_domestic.csv"
+
+      - name: Update sentiment data
+        continue-on-error: true
+        run: |
+          python fetch_sentiment.py --update-all
+
+      - name: Update market data
+        continue-on-error: true
+        run: |
+          python fetch_data.py update
+          python fetch_data.py generate
+
+      - name: Upload updated data to S3
+        run: |
+          aws s3 cp bond_yields_10y.csv s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/bond_yields_10y.csv --content-type "text/csv" --acl public-read
+          aws s3 cp stock_indices.csv s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/stock_indices.csv --content-type "text/csv" --acl public-read
+          aws s3 cp currencies.csv s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/currencies.csv --content-type "text/csv" --acl public-read
+          aws s3 cp sentiment_data.csv s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/sentiment_data.csv --content-type "text/csv" --acl public-read
+          aws s3 cp sentiment_data_domestic.csv s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/sentiment_data_domestic.csv --content-type "text/csv" --acl public-read
+          aws s3 cp data.js s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data.js --content-type "application/javascript" --acl public-read
+
+      - name: Commit and push updated CSV files (optional)
+        continue-on-error: true
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "chore: update data files from nightly fetch" || echo "No changes to commit"
+          git push
+
+      - name: Log update completion
+        run: |
+          echo "=== Data Update Complete ==="
+          echo "Updated files uploaded to S3 bucket: ${{ steps.get-bucket.outputs.BUCKET_NAME }}"

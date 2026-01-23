@@ -1,0 +1,91 @@
+name: Deploy to AWS S3
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+jobs:
+  deploy:
+    name: Deploy Infrastructure and Website
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Pulumi
+        uses: pulumi/actions@v4
+        with:
+          pulumi-version: 3.x.x
+
+      - name: Install infrastructure dependencies
+        working-directory: ./infrastructure
+        run: |
+          pip install -r requirements.txt
+
+      - name: Initialize Pulumi local backend
+        run: |
+          pulumi login --local
+
+      - name: Deploy infrastructure with Pulumi
+        working-directory: ./infrastructure
+        env:
+          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+        run: |
+          pulumi stack select dev --create
+          pulumi up --yes
+
+      - name: Upload website files to S3
+        run: |
+          aws s3 sync . s3://macro-live-data-viewer-bucket \
+            --exclude "*" \
+            --include "index.html" \
+            --include "data.js" \
+            --include "bond_yields_10y.csv" \
+            --include "stock_indices.csv" \
+            --include "currencies.csv" \
+            --include "sentiment_data.csv" \
+            --include "sentiment_data_domestic.csv" \
+            --include "countries_tickers.csv" \
+            --acl public-read
+
+      - name: Print deployment information
+        working-directory: ./infrastructure
+        run: |
+          echo "=== Deployment Complete ==="
+          echo "Website URL: $(pulumi stack output website_url)"
+          echo "S3 Bucket: $(pulumi stack output bucket_name)"
+
+      - name: Commit Pulumi state files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .pulumi/
+          git commit -m "chore: update pulumi state files" || echo "No state changes to commit"
+          git push

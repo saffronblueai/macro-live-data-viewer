@@ -1,0 +1,24 @@
+# Pulumi
+Pulumi.*.yaml
+.pulumi/
+*.pyc
+
+# Python
+__pycache__/
+venv/
+env/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
