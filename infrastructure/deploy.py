@@ -101,10 +101,7 @@ def main():
     print()
 
     # Ask for stack name
-    stack_name = input(f"Enter stack name (default: dev): ").strip() or "dev"
-
-    # Ask for AWS region
-    region = input(f"Enter AWS region (default: us-east-1): ").strip() or "us-east-1"
+    stack_name = input(f"Enter stack name (default: prod): ").strip() or "prod"
 
     # Initialize stack
     output, code = run_command(f"pulumi stack select {stack_name}", check=False)
@@ -113,11 +110,6 @@ def main():
     else:
         print(f"{YELLOW}Creating new stack: {stack_name}{RESET}")
         run_command(f"pulumi stack init {stack_name}")
-
-    # Set configuration
-    print(f"{YELLOW}Configuring stack...{RESET}")
-    run_command(f"pulumi config set aws:region {region}")
-    print_success(f"AWS region set to: {region}")
 
     print()
 
