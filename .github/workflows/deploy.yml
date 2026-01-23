@@ -95,13 +95,12 @@ jobs:
           echo "Website URL: $(pulumi stack output website_url)"
           echo "S3 Bucket: $(pulumi stack output bucket_name)"
 
-      - name: Commit Pulumi state files
-        continue-on-error: true
+      - name: Upload Pulumi state to S3
+        if: always()
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
           if [ -d ".pulumi/" ]; then
-            git add .pulumi/ && git commit -m "chore: update pulumi state files" && git push
+            aws s3 sync .pulumi/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/pulumi-state/ --delete
+            echo "Pulumi state uploaded to S3 bucket: ${{ steps.get-bucket.outputs.BUCKET_NAME }}/pulumi-state/"
           else
-            echo "No .pulumi/ directory to commit"
+            echo "No .pulumi/ directory to upload"
           fi
