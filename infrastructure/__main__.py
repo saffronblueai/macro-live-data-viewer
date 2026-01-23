@@ -13,7 +13,7 @@ import pulumi_aws as aws
 
 # Create the S3 bucket for static website
 website_bucket = aws.s3.Bucket("macro-live-data-viewer-bucket",
-    name="macro-live-data-viewer-bucket",
+    bucket="macro-live-data-viewer-bucket",
     acl="public-read",
     website=aws.s3.BucketWebsiteArgs(
         index_document="index.html",
@@ -43,6 +43,19 @@ bucket_policy = aws.s3.BucketPolicy(
             }
         )
     ),
+)
+
+# ============================================================================
+# S3 Public Access Block Configuration
+# ============================================================================
+
+public_access_block = aws.s3.BucketPublicAccessBlock(
+    "macro-live-data-viewer-public-access",
+    bucket=website_bucket.id,
+    block_public_acls=False,
+    block_public_policy=False,
+    ignore_public_acls=False,
+    restrict_public_buckets=False,
 )
 
 # ============================================================================
