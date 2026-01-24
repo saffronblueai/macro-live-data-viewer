@@ -3,11 +3,12 @@ name: Nightly Data Fetch and Update
 on:
   schedule:
     # Run every evening at 8 PM UTC (adjust as needed)
-    - cron: "0 20 * * *"
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 env:
   AWS_REGION: us-east-1
+  WEBSITE_S3_BUCKET_NAME: macro-live-data-viewer-bucket
 
 jobs:
   update-data:
@@ -37,20 +38,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Get S3 bucket name from Pulumi
-        id: get-bucket
-        working-directory: ./infrastructure
-        env:
-          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
-        run: |
-          pip install pulumi pulumi-aws
-          BUCKET_NAME=$(pulumi stack output bucket_name)
-          echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_OUTPUT
-
       - name: Download existing data from S3
         run: |
           mkdir -p data
-          aws s3 sync s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ data/ \
+          aws s3 sync s3://${{ env.WEBSITE_S3_BUCKET_NAME }}/ data/ \
             --exclude "*" \
             --include "*.csv" || echo "No existing CSV files in S3"
 
@@ -66,22 +57,12 @@ jobs:
 
       - name: Upload updated data to S3
         run: |
-          aws s3 sync data/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ \
+          aws s3 sync data/ s3://${{ env.WEBSITE_S3_BUCKET_NAME }}/ \
             --exclude ".gitkeep" \
-            --exclude "*.log" \
-            --no-overwrite
-          aws s3 cp src/data.js s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data.js --content-type "application/javascript"
-
-      - name: Commit and push updated CSV files (optional)
-        continue-on-error: true
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git commit -m "chore: update data files from nightly fetch" || echo "No changes to commit"
-          git push
+            --exclude "*.log"
+          aws s3 cp src/data.js s3://${{ env.WEBSITE_S3_BUCKET_NAME }}/data.js --content-type "application/javascript"
 
       - name: Log update completion
         run: |
           echo "=== Data Update Complete ==="
-          echo "Updated files uploaded to S3 bucket: ${{ steps.get-bucket.outputs.BUCKET_NAME }}"
+          echo "Updated files uploaded to S3 bucket: ${{ env.WEBSITE_S3_BUCKET_NAME }}"
