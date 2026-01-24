@@ -40,8 +40,7 @@ jobs:
 
       - name: Download existing data from S3
         run: |
-          mkdir -p data
-          aws s3 sync s3://${{ env.WEBSITE_S3_BUCKET_NAME }}/ data/ \
+          aws s3 sync s3://${{ env.WEBSITE_S3_BUCKET_NAME }}/ src/ \
             --exclude "*" \
             --include "*.csv" || echo "No existing CSV files in S3"
 
@@ -57,9 +56,9 @@ jobs:
 
       - name: Upload updated data to S3
         run: |
-          aws s3 sync data/ s3://${{ env.WEBSITE_S3_BUCKET_NAME }}/ \
-            --exclude ".gitkeep" \
-            --exclude "*.log"
+          aws s3 sync src/ s3://${{ env.WEBSITE_S3_BUCKET_NAME }}/ \
+            --exclude "*" \
+            --include "*.csv"
           aws s3 cp src/data.js s3://${{ env.WEBSITE_S3_BUCKET_NAME }}/data.js --content-type "application/javascript"
 
       - name: Log update completion
