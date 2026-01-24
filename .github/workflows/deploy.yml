@@ -84,8 +84,10 @@ jobs:
       - name: Upload website files to S3
         run: |
           # Upload HTML and JS files from src/ to root (flattened)
-          aws s3 cp src/index.html s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/index.html
-          aws s3 cp src/data.js s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/data.js
+          aws s3 sync src/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ \
+            --exclude "*" \
+            --include "index.html" \
+            --include "data.js"
           
           # Upload CSV data files to root (flattened, preserve existing)
           aws s3 sync data/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ \
