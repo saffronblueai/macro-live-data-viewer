@@ -48,16 +48,16 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Initialize Pulumi local backend
-        run: |
-          pulumi login --local
-
       - name: Download Pulumi state from S3
         continue-on-error: true
         run: |
-          mkdir -p ~/.pulumi
-          aws s3 sync s3://macro-live-data-viewer-bucket/pulumi-state/ ~/.pulumi/ \
+          mkdir -p $HOME/.pulumi
+          aws s3 sync s3://macro-live-data-viewer-bucket/pulumi-state/ $HOME/.pulumi/ \
             --exclude "plugins/*" || echo "No existing Pulumi state in S3"
+
+      - name: Initialize Pulumi local backend
+        run: |
+          pulumi login --local
 
       - name: Clean up any incomplete plugins
         run: |
@@ -86,8 +86,9 @@ jobs:
           # Upload HTML and JS files (first time only) from src/ to root (flattened)
           aws s3 sync src/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ \
             --exclude "*" \
-            --include "index.html" \
-          aws s3 sync src/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ \
+            --include "index.html"
+
+            aws s3 sync src/ s3://${{ steps.get-bucket.outputs.BUCKET_NAME }}/ \
             --exclude "*" \
             --include "data.js" \
             --no-overwrite
