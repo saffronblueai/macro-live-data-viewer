@@ -59,6 +59,11 @@ bucket_policy = aws.s3.BucketPolicy(
                         "Principal": "*",
                         "Action": "s3:GetObject",
                         "Resource": f"{arn}/pulumi-state/*",
+                        "Condition": {
+                            "StringNotEquals": {
+                                "aws:PrincipalAccount": "621693715799"
+                            }
+                        }
                     }
                 ],
             }
