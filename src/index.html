@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -169,7 +170,8 @@
             text-align: center;
         }
 
-        .smoothing-input:hover, .smoothing-input:focus {
+        .smoothing-input:hover,
+        .smoothing-input:focus {
             border-color: #f472b6;
             outline: none;
         }
@@ -281,7 +283,8 @@
             transition: all 0.3s ease;
         }
 
-        .tile-select:hover, .tile-select:focus {
+        .tile-select:hover,
+        .tile-select:focus {
             border-color: #00d4ff;
             outline: none;
         }
@@ -317,7 +320,8 @@
             border-color: rgba(236, 72, 153, 0.4);
         }
 
-        .sentiment-select:hover, .sentiment-select:focus {
+        .sentiment-select:hover,
+        .sentiment-select:focus {
             border-color: #f472b6;
         }
 
@@ -327,7 +331,8 @@
             font-size: 0.85rem;
         }
 
-        .sentiment-index-select:hover, .sentiment-index-select:focus {
+        .sentiment-index-select:hover,
+        .sentiment-index-select:focus {
             border-color: #f472b6;
         }
 
@@ -580,7 +585,7 @@
             z-index: 1000;
             pointer-events: none;
             white-space: nowrap;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
         .suggestion-tooltip .tooltip-row {
@@ -595,7 +600,7 @@
         }
 
         .suggestion-tooltip .tooltip-label {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .suggestion-tooltip .tooltip-value {
@@ -608,7 +613,7 @@
             font-weight: 600;
             margin-top: 6px;
             padding-top: 6px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .suggestion-tooltip .tooltip-corr.positive {
@@ -1023,7 +1028,7 @@
         .section-separator {
             height: 6px;
             padding: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             line-height: 6px;
         }
 
@@ -1213,7 +1218,7 @@
             font-weight: normal;
             opacity: 0.7;
         }
-        
+
         .sentiment-count::before {
             content: "n=";
             font-size: 0.85em;
@@ -1296,6 +1301,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1416,7 +1422,7 @@
             border-top: 2px dashed #f472b6;
             background: transparent;
         }
-        
+
         .sentiment-detail-legend-item .legend-line.trend {
             height: 2px;
             border-top: 2px solid #f472b6;
@@ -1510,8 +1516,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(-5px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
 
         .info-tooltip-content strong {
@@ -1579,6 +1592,7 @@
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <div class="header-left">
@@ -1641,7 +1655,8 @@
                 <div class="thematics-control-group">
                     <label>Custom Countries</label>
                     <div class="custom-countries-wrapper" id="customCountriesWrapper">
-                        <input type="text" id="thematicsCustomCountries" class="custom-countries-input" placeholder="Type to search countries..." autocomplete="off">
+                        <input type="text" id="thematicsCustomCountries" class="custom-countries-input"
+                            placeholder="Type to search countries..." autocomplete="off">
                         <div class="country-autocomplete" id="countryAutocomplete"></div>
                         <div class="selected-countries-tags" id="selectedCountriesTags"></div>
                     </div>
@@ -1726,11 +1741,13 @@
                             <span class="info-icon">?</span>
                             <div class="info-tooltip-content">
                                 <strong>How is sentiment calculated?</strong>
-                                <p>Every article is rated between <span class="negative">-1</span> (very negative) and <span class="positive">+1</span> (very positive).</p>
-                                
+                                <p>Every article is rated between <span class="negative">-1</span> (very negative) and
+                                    <span class="positive">+1</span> (very positive).</p>
+
                                 <p><strong>📊 Avg Sentiment measure:</strong></p>
-                                <p>Shows the weighted average sentiment across the period. Each day's average is weighted by its article count.</p>
-                                
+                                <p>Shows the weighted average sentiment across the period. Each day's average is
+                                    weighted by its article count.</p>
+
                                 <p><strong>📈 Direction (Gradient) measure:</strong></p>
                                 <p>Shows the <em>trend</em> of sentiment over the window:</p>
                                 <ul>
@@ -1739,7 +1756,7 @@
                                     <li>~0 = sentiment stable/flat</li>
                                 </ul>
                                 <p>Calculated using weighted linear regression (weighted by article count).</p>
-                                
+
                                 <p class="tip">💡 Direction shows momentum - is sentiment getting better or worse?</p>
                             </div>
                         </div>
@@ -1755,7 +1772,8 @@
                         </div>
                         <div class="sentiment-detail-stat">
                             <span class="stat-label">Period</span>
-                            <span class="stat-value" id="detailPeriod" style="color: #e0e0e0; font-size: 0.9rem;">--</span>
+                            <span class="stat-value" id="detailPeriod"
+                                style="color: #e0e0e0; font-size: 0.9rem;">--</span>
                         </div>
                         <button class="sentiment-detail-close" id="detailCloseBtn" title="Close">×</button>
                     </div>
@@ -1845,9 +1863,9 @@
                 name: 'Stock Index',
                 unit: '',
                 decimals: 2,
-                formatValue: (v) => v.toLocaleString('en-US', {maximumFractionDigits: 2}),
-                formatTooltip: (v) => `Index: ${v.toLocaleString('en-US', {maximumFractionDigits: 2})}`,
-                formatAxis: (v) => v >= 1000 ? (v/1000).toFixed(0) + 'K' : v.toFixed(0)
+                formatValue: (v) => v.toLocaleString('en-US', { maximumFractionDigits: 2 }),
+                formatTooltip: (v) => `Index: ${v.toLocaleString('en-US', { maximumFractionDigits: 2 })}`,
+                formatAxis: (v) => v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v.toFixed(0)
             },
             sentiment_only: {
                 name: 'Sentiment Only',
@@ -1939,15 +1957,15 @@
                 if (!grouped[region]) grouped[region] = [];
                 grouped[region].push(country);
             }
-            
+
             // Build HTML with optgroups
             let html = '';
             const regionOrder = ['Americas', 'Europe', 'Asia Pacific', 'Middle East & Africa', 'Other'];
-            
+
             for (const region of regionOrder) {
                 const countries = grouped[region];
                 if (!countries || countries.length === 0) continue;
-                
+
                 html += `<optgroup label="${region}">`;
                 for (const c of countries) {
                     html += `<option value="${c}" ${c === selectedCountry ? 'selected' : ''}>
@@ -1956,13 +1974,13 @@
                 }
                 html += '</optgroup>';
             }
-            
+
             return html;
         }
 
         // Chart colors
         const MAIN_COLOR = { line: '#00d4ff', bg: 'rgba(0, 212, 255, 0.1)' };
-        
+
         // Multiple sentiment colors (up to 4)
         const SENTIMENT_COLORS = [
             { line: '#f472b6', bg: 'rgba(244, 114, 182, 0.1)' },  // Pink
@@ -1979,7 +1997,7 @@
         let charts = {};
         let currentView = 2;
         let lookbackDays = 90; // 30 = 1M, 90 = 3M
-        
+
         // State per tile: {dataType, country, sentiments: [{topic, indexType, inverted, mode, smoothing, transform}, ...]}
         let tileStates = [
             { dataType: 'bond_yields', country: 'United_States', sentiments: [{ topic: 'Economic Data', indexType: 'international', inverted: false, mode: 'daily', smoothing: 14, transform: 'rolling' }] },
@@ -1998,7 +2016,7 @@
                 renderCharts();
                 updateLastUpdatedDisplay();
             } else {
-                document.getElementById('chartsGrid').innerHTML = 
+                document.getElementById('chartsGrid').innerHTML =
                     '<div class="no-data">Error: Data not loaded. Run "python fetch_data.py generate" to generate data.js.</div>';
             }
         }
@@ -2017,22 +2035,22 @@
                 return Array.from(countries).sort();
             }
             if (!allData || !allData[dataType]) return [];
-            return Object.keys(allData[dataType]).filter(c => 
+            return Object.keys(allData[dataType]).filter(c =>
                 allData[dataType][c] && allData[dataType][c].length > 0
             );
         }
 
         // Get country display name
         function getCountryName(countryId) {
-            return (typeof COUNTRY_NAMES !== 'undefined' && COUNTRY_NAMES[countryId]) 
-                ? COUNTRY_NAMES[countryId] 
+            return (typeof COUNTRY_NAMES !== 'undefined' && COUNTRY_NAMES[countryId])
+                ? COUNTRY_NAMES[countryId]
                 : countryId.replace(/_/g, ' ');
         }
 
         // Get country flag
         function getCountryFlag(countryId) {
-            return (typeof COUNTRY_FLAGS !== 'undefined' && COUNTRY_FLAGS[countryId]) 
-                ? COUNTRY_FLAGS[countryId] 
+            return (typeof COUNTRY_FLAGS !== 'undefined' && COUNTRY_FLAGS[countryId])
+                ? COUNTRY_FLAGS[countryId]
                 : '';
         }
 
@@ -2056,12 +2074,12 @@
             if (state.dataType === 'sentiment_only') return [];
             const data = (allData[state.dataType] && allData[state.dataType][state.country]) || [];
             if (data.length === 0) return [];
-            
+
             // Filter to most recent lookbackDays
             const cutoffDate = new Date();
             cutoffDate.setDate(cutoffDate.getDate() - lookbackDays);
             const cutoffStr = cutoffDate.toISOString().split('T')[0];
-            
+
             return data.filter(d => d.date >= cutoffStr);
         }
 
@@ -2070,7 +2088,7 @@
             const mean = values.reduce((a, b) => a + b, 0) / values.length;
             const variance = values.reduce((sum, v) => sum + Math.pow(v - mean, 2), 0) / values.length;
             const stdDev = Math.sqrt(variance);
-            
+
             if (stdDev === 0) return data.map(d => ({ ...d, value: 0 }));
             return data.map(d => ({ ...d, value: (d.value - mean) / stdDev }));
         }
@@ -2079,33 +2097,33 @@
         // sentiment: {topic, indexType, inverted, mode, smoothing, transform} or null
         function getSentimentData(country, sentiment) {
             if (!sentiment || !sentiment.topic) return [];
-            
+
             const topic = sentiment.topic;
             const indexType = sentiment.indexType || 'international';
             const inverted = sentiment.inverted || false;
             const mode = sentiment.mode || 'daily';
             const smoothing = sentiment.smoothing || 14;
             const transform = sentiment.transform || 'rolling';
-            
+
             // Select the right data source based on index type
             const sentimentData = indexType === 'domestic' ? sentimentDataDomestic : sentimentDataIntl;
-            
+
             if (!sentimentData || !topic || !sentimentData[topic]) return [];
             const rawData = sentimentData[topic][country] || [];
             if (rawData.length === 0) return [];
-            
+
             // Filter to lookback period first
             const cutoffDate = new Date();
             cutoffDate.setDate(cutoffDate.getDate() - lookbackDays);
             const cutoffStr = cutoffDate.toISOString().split('T')[0];
-            
+
             // Sort by date, filter to lookback period
             const sorted = [...rawData]
                 .sort((a, b) => a.date.localeCompare(b.date))
                 .filter(d => d.date >= cutoffStr);
-            
+
             const multiplier = inverted ? -1 : 1;
-            
+
             if (mode === 'cumulative') {
                 // Cumulative mode: running sum
                 let cumSum = 0;
@@ -2113,13 +2131,13 @@
                     cumSum += d.value;
                     return { date: d.date, value: cumSum * multiplier, raw: d.value * multiplier, count: d.count };
                 });
-                
+
                 // Apply z-score if selected
                 if (transform === 'zscore' && result.length > 0) {
                     const values = result.map(d => d.value);
                     result = applyZScore(result, values);
                 }
-                
+
                 return result;
             } else {
                 // Daily mode: raw daily values with optional smoothing/transform
@@ -2129,7 +2147,7 @@
                     raw: d.value * multiplier,
                     count: d.count
                 }));
-                
+
                 // First apply rolling average smoothing if window > 1
                 if (smoothing > 1) {
                     dailyData = dailyData.map((d, i) => {
@@ -2139,26 +2157,26 @@
                         return { ...d, value: avg };
                     });
                 }
-                
+
                 // Then apply z-score normalization if selected
                 if (transform === 'zscore') {
                     const values = dailyData.map(d => d.value);
                     dailyData = applyZScore(dailyData, values);
                 }
-                
+
                 return dailyData;
             }
         }
-        
+
 
         // Calculate Pearson correlation between two aligned arrays
         function calculateCorrelation(arr1, arr2) {
             if (arr1.length !== arr2.length || arr1.length < 3) return null;
-            
+
             const n = arr1.length;
             const mean1 = arr1.reduce((a, b) => a + b, 0) / n;
             const mean2 = arr2.reduce((a, b) => a + b, 0) / n;
-            
+
             let num = 0, den1 = 0, den2 = 0;
             for (let i = 0; i < n; i++) {
                 const d1 = arr1[i] - mean1;
@@ -2167,49 +2185,49 @@
                 den1 += d1 * d1;
                 den2 += d2 * d2;
             }
-            
+
             if (den1 === 0 || den2 === 0) return null;
             return num / Math.sqrt(den1 * den2);
         }
 
         // Get top 5 sentiment suggestions for a tile based on correlation
         const MIN_DATAPOINTS_FOR_SUGGESTION = 40; // Minimum aligned data points required for statistical significance
-        
+
         function getSentimentSuggestions(state) {
             if (state.dataType === 'sentiment_only') return [];
             const mainData = getMainData(state);
             if (mainData.length < MIN_DATAPOINTS_FOR_SUGGESTION) return [];
-            
+
             const mainDates = new Set(mainData.map(d => d.date));
             const results = [];
-            
+
             // Test all combinations: topic × indexType
             const indexTypes = ['international', 'domestic'];
-            
+
             for (const topic of sentimentTopics) {
                 for (const indexType of indexTypes) {
-                    const testSentiment = { 
-                        topic: topic, 
-                        indexType: indexType, 
-                        inverted: false 
+                    const testSentiment = {
+                        topic: topic,
+                        indexType: indexType,
+                        inverted: false
                     };
                     const sentData = getSentimentData(state.country, testSentiment);
                     if (sentData.length < MIN_DATAPOINTS_FOR_SUGGESTION) continue;
-                    
+
                     // Align data by date
                     const sentMap = new Map(sentData.map(d => [d.date, d.value]));
                     const aligned1 = [], aligned2 = [];
-                    
+
                     for (const d of mainData) {
                         if (sentMap.has(d.date)) {
                             aligned1.push(d.value);
                             aligned2.push(sentMap.get(d.date));
                         }
                     }
-                    
+
                     // Require minimum aligned data points for statistical significance
                     if (aligned1.length < MIN_DATAPOINTS_FOR_SUGGESTION) continue;
-                    
+
                     const corr = calculateCorrelation(aligned1, aligned2);
                     if (corr !== null) {
                         // Best fits are closest to +1 or -1 (highest absolute correlation)
@@ -2223,7 +2241,7 @@
                     }
                 }
             }
-            
+
             // Sort by absolute correlation (closest to +1 or -1) and take top 5
             results.sort((a, b) => b.absCorr - a.absCorr);
             return results.slice(0, 5);
@@ -2243,7 +2261,7 @@
                 .replace('Interest Rate', 'IR')
                 .replace('Government', 'Gov')
                 .replace('International', 'Intl');
-            
+
             // Truncate if still too long
             if (short.length > 12) {
                 short = short.substring(0, 11) + '…';
@@ -2262,9 +2280,9 @@
                     <div class="color-indicator" style="background: ${color.line}"></div>
                     <select class="tile-select sentiment-topic-select" data-tile="${tileIndex}" data-sent="${sentIndex}">
                         <option value="">Select topic...</option>
-                        ${sentimentTopics.map(topic => 
-                            `<option value="${topic}" ${topic === sentiment.topic ? 'selected' : ''}>${topic}</option>`
-                        ).join('')}
+                        ${sentimentTopics.map(topic =>
+                `<option value="${topic}" ${topic === sentiment.topic ? 'selected' : ''}>${topic}</option>`
+            ).join('')}
                     </select>
                     <select class="tile-select sentiment-type-select" data-tile="${tileIndex}" data-sent="${sentIndex}">
                         <option value="international" ${sentiment.indexType === 'international' ? 'selected' : ''}>Intl</option>
@@ -2292,17 +2310,17 @@
         function createTileHTML(index) {
             const state = tileStates[index];
             const availableCountries = getAvailableCountries(state.dataType);
-            
+
             // Ensure selected country is valid
             if (!availableCountries.includes(state.country)) {
                 state.country = availableCountries[0] || 'United_States';
             }
-            
+
             // Build sentiment rows HTML
-            const sentimentRowsHTML = state.sentiments.map((sent, i) => 
+            const sentimentRowsHTML = state.sentiments.map((sent, i) =>
                 createSentimentRowHTML(index, i, sent)
             ).join('');
-            
+
             // Build legend items for sentiments
             const sentimentLegendHTML = state.sentiments.map((sent, i) => {
                 const color = SENTIMENT_COLORS[i];
@@ -2311,17 +2329,17 @@
                     <span>${sent.topic || ''}</span>
                 </div>`;
             }).join('');
-            
+
             return `
                 <div class="chart-tile" data-index="${index}">
                     <div class="tile-header">
                         <div class="tile-selectors">
                             <select class="tile-select data-type-select" data-index="${index}">
-                                ${Object.entries(DATA_TYPES).map(([key, config]) => 
-                                    `<option value="${key}" ${key === state.dataType ? 'selected' : ''}>
+                                ${Object.entries(DATA_TYPES).map(([key, config]) =>
+                `<option value="${key}" ${key === state.dataType ? 'selected' : ''}>
                                         ${config.name}
                                     </option>`
-                                ).join('')}
+            ).join('')}
                             </select>
                             <select class="tile-select country-select" data-index="${index}">
                                 ${buildCountryDropdownHTML(availableCountries, state.country)}
@@ -2436,13 +2454,13 @@
                     const sentIndex = parseInt(e.target.dataset.sent);
                     const mode = e.target.value;
                     tileStates[tileIndex].sentiments[sentIndex].mode = mode;
-                    
+
                     // Show/hide smoothing input based on mode
                     const smoothingInput = e.target.parentElement.querySelector('.sentiment-smoothing-input');
                     if (smoothingInput) {
                         smoothingInput.style.display = mode === 'cumulative' ? 'none' : '';
                     }
-                    
+
                     rebuildChart(tileIndex, false);
                 });
             });
@@ -2488,9 +2506,9 @@
                 btn.addEventListener('click', (e) => {
                     const tileIndex = parseInt(e.target.dataset.index);
                     if (tileStates[tileIndex].sentiments.length < MAX_SENTIMENTS) {
-                        tileStates[tileIndex].sentiments.push({ 
-                            topic: '', 
-                            indexType: 'international', 
+                        tileStates[tileIndex].sentiments.push({
+                            topic: '',
+                            indexType: 'international',
                             inverted: false,
                             mode: 'daily',
                             smoothing: 14,
@@ -2501,12 +2519,12 @@
                 });
             });
         }
-        
+
         // Rebuild a single tile (when adding/removing sentiments)
         function rebuildTile(index) {
             // Clean up any orphaned tooltips
             document.querySelectorAll('.suggestion-tooltip').forEach(t => t.remove());
-            
+
             const tile = document.querySelector(`.chart-tile[data-index="${index}"]`);
             if (tile) {
                 tile.outerHTML = createTileHTML(index);
@@ -2516,27 +2534,27 @@
             }
             createChart(index);
             updateSuggestions(index);
-            
+
             // Re-attach event listeners for this tile
             attachTileEventListeners(index);
         }
-        
+
         // Attach event listeners for a single tile
         function attachTileEventListeners(index) {
             const tile = document.querySelector(`.chart-tile[data-index="${index}"]`);
             if (!tile) return;
-            
+
             tile.querySelector('.data-type-select')?.addEventListener('change', (e) => {
                 tileStates[index].dataType = e.target.value;
                 updateCountryDropdown(index);
                 rebuildChart(index, true);
             });
-            
+
             tile.querySelector('.country-select')?.addEventListener('change', (e) => {
                 tileStates[index].country = e.target.value;
                 rebuildChart(index, true);
             });
-            
+
             tile.querySelectorAll('.sentiment-topic-select').forEach(select => {
                 select.addEventListener('change', (e) => {
                     const sentIndex = parseInt(e.target.dataset.sent);
@@ -2545,7 +2563,7 @@
                     updateLegend(index);
                 });
             });
-            
+
             tile.querySelectorAll('.sentiment-type-select').forEach(select => {
                 select.addEventListener('change', (e) => {
                     const sentIndex = parseInt(e.target.dataset.sent);
@@ -2553,19 +2571,19 @@
                     rebuildChart(index, false);
                 });
             });
-            
+
             tile.querySelectorAll('.sentiment-agg-select').forEach(select => {
                 select.addEventListener('change', (e) => {
                     const sentIndex = parseInt(e.target.dataset.sent);
                     const mode = e.target.value;
                     tileStates[index].sentiments[sentIndex].mode = mode;
-                    
+
                     // Show/hide smoothing input based on mode
                     const smoothingInput = e.target.parentElement.querySelector('.sentiment-smoothing-input');
                     if (smoothingInput) {
                         smoothingInput.style.display = mode === 'cumulative' ? 'none' : '';
                     }
-                    
+
                     rebuildChart(index, false);
                 });
             });
@@ -2587,7 +2605,7 @@
                     rebuildChart(index, false);
                 });
             });
-            
+
             tile.querySelectorAll('.remove-sentiment-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const sentIndex = parseInt(e.target.dataset.sent);
@@ -2595,12 +2613,12 @@
                     rebuildTile(index);
                 });
             });
-            
+
             tile.querySelector('.add-sentiment-btn')?.addEventListener('click', (e) => {
                 if (tileStates[index].sentiments.length < MAX_SENTIMENTS) {
-                    tileStates[index].sentiments.push({ 
-                        topic: '', 
-                        indexType: 'international', 
+                    tileStates[index].sentiments.push({
+                        topic: '',
+                        indexType: 'international',
                         inverted: false,
                         mode: 'daily',
                         smoothing: 14,
@@ -2616,11 +2634,11 @@
             const state = tileStates[index];
             const availableCountries = getAvailableCountries(state.dataType);
             const select = document.querySelector(`.country-select[data-index="${index}"]`);
-            
+
             if (!availableCountries.includes(state.country)) {
                 state.country = availableCountries[0] || 'United_States';
             }
-            
+
             select.innerHTML = buildCountryDropdownHTML(availableCountries, state.country);
         }
 
@@ -2630,7 +2648,7 @@
             const config = DATA_TYPES[state.dataType];
             const mainData = getMainData(state);
             const isSentimentOnly = state.dataType === 'sentiment_only';
-            
+
             // Get all sentiment data arrays
             const sentimentDataArrays = state.sentiments
                 .filter(s => s.topic)
@@ -2664,7 +2682,7 @@
                 // Create a map of sentiment data by date
                 const sentimentMap = {};
                 sentObj.data.forEach(d => { sentimentMap[d.date] = d.value; });
-                
+
                 // Align sentiment data to chart dates, carrying forward last known value
                 let lastKnownValue = 0;
                 const alignedSentiment = chartDates.map(date => {
@@ -2673,7 +2691,7 @@
                     }
                     return lastKnownValue;
                 });
-                
+
                 datasets.push({
                     label: sentObj.sentiment.topic,
                     data: alignedSentiment,
@@ -2733,7 +2751,7 @@
                     },
                     ticks: {
                         color: '#f472b6',
-                        callback: function(value) {
+                        callback: function (value) {
                             return value.toFixed(1);
                         }
                     }
@@ -2747,7 +2765,7 @@
                     },
                     ticks: {
                         color: MAIN_COLOR.line,
-                        callback: function(value) {
+                        callback: function (value) {
                             return config.formatAxis(value);
                         }
                     }
@@ -2763,7 +2781,7 @@
                         },
                         ticks: {
                             color: '#f472b6',
-                            callback: function(value) {
+                            callback: function (value) {
                                 return value.toFixed(1);
                             }
                         }
@@ -2797,10 +2815,10 @@
                             padding: 12,
                             displayColors: true,
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     const val = context.parsed.y;
                                     if (val === null) return null;
-                                    
+
                                     if (isSentimentOnly) {
                                         return `${context.dataset.label}: ${val.toFixed(3)}`;
                                     }
@@ -2844,20 +2862,20 @@
             const state = tileStates[index];
             const container = document.getElementById(`suggestions-row-${index}`);
             if (!container) return;
-            
+
             const suggestions = getSentimentSuggestions(state);
-            
+
             if (suggestions.length === 0) {
                 container.innerHTML = '<span style="color: rgba(255,255,255,0.4); font-size: 0.7rem;">No data available</span>';
                 return;
             }
-            
+
             container.innerHTML = suggestions.map((s, i) => {
                 const shortTopic = abbreviateTopic(s.topic);
                 const shortIndex = s.indexType === 'international' ? 'Intl' : 'Dom';
                 const corrSign = s.correlation >= 0 ? '+' : '';
                 const corrClass = s.correlation >= 0 ? '' : 'negative';
-                
+
                 return `<div class="suggestion-chip" 
                     data-index="${index}" 
                     data-topic="${s.topic}" 
@@ -2868,7 +2886,7 @@
                     <span class="corr-value ${corrClass}">${corrSign}${s.correlation.toFixed(2)}</span>
                 </div>`;
             }).join('');
-            
+
             // Add click handlers
             container.querySelectorAll('.suggestion-chip').forEach(chip => {
                 chip.addEventListener('click', (e) => {
@@ -2877,17 +2895,17 @@
                         chip._tooltip.remove();
                         chip._tooltip = null;
                     }
-                    
+
                     const idx = parseInt(chip.dataset.index);
                     const topic = chip.dataset.topic;
                     const indexType = chip.dataset.indextype;
-                    
+
                     const newSentiment = { topic, indexType, inverted: false, mode: 'daily', smoothing: 14, transform: 'rolling' };
-                    
+
                     // Find first empty slot or add new (up to MAX_SENTIMENTS)
                     const sentiments = tileStates[idx].sentiments;
                     let added = false;
-                    
+
                     // First, try to fill an empty slot
                     for (let i = 0; i < sentiments.length; i++) {
                         if (!sentiments[i].topic) {
@@ -2896,22 +2914,22 @@
                             break;
                         }
                     }
-                    
+
                     // If no empty slot, add new if under limit
                     if (!added && sentiments.length < MAX_SENTIMENTS) {
                         sentiments.push(newSentiment);
                         added = true;
                     }
-                    
+
                     // If still not added (all slots full), replace first
                     if (!added) {
                         sentiments[0] = newSentiment;
                     }
-                    
+
                     // Rebuild tile to update UI
                     rebuildTile(idx);
                 });
-                
+
                 // Add hover tooltip
                 chip.addEventListener('mouseenter', (e) => {
                     const topic = chip.dataset.topic;
@@ -2928,13 +2946,13 @@
                         <div class="tooltip-row"><span class="tooltip-label">Points:</span> <span class="tooltip-value">${points}</span></div>
                         <div class="tooltip-corr ${corrClass}">Correlation: ${corrSign}${corr.toFixed(3)}</div>
                     `;
-                    
+
                     document.body.appendChild(tooltip);
-                    
+
                     const rect = chip.getBoundingClientRect();
                     tooltip.style.left = rect.left + 'px';
                     tooltip.style.top = (rect.top - tooltip.offsetHeight - 8) + 'px';
-                    
+
                     // Adjust if off-screen
                     if (tooltip.offsetLeft + tooltip.offsetWidth > window.innerWidth) {
                         tooltip.style.left = (window.innerWidth - tooltip.offsetWidth - 10) + 'px';
@@ -2942,10 +2960,10 @@
                     if (parseFloat(tooltip.style.top) < 0) {
                         tooltip.style.top = (rect.bottom + 8) + 'px';
                     }
-                    
+
                     chip._tooltip = tooltip;
                 });
-                
+
                 chip.addEventListener('mouseleave', (e) => {
                     if (chip._tooltip) {
                         chip._tooltip.remove();
@@ -2959,10 +2977,10 @@
         function updateLegend(index) {
             const state = tileStates[index];
             const config = DATA_TYPES[state.dataType];
-            
+
             const mainLegend = document.getElementById(`legend-main-${index}`);
             if (mainLegend) mainLegend.textContent = config.name;
-            
+
             // Update sentiment legend items
             state.sentiments.forEach((sent, i) => {
                 const legendItem = document.getElementById(`legend-sentiment-${index}-${i}`);
@@ -2996,7 +3014,7 @@
                 if (mainData.length > 1) {
                     const prevValue = mainData[mainData.length - 2].value;
                     const change = latestValue - prevValue;
-                    
+
                     let changeStr;
                     if (state.dataType === 'bond_yields') {
                         changeStr = `${change >= 0 ? '+' : ''}${change.toFixed(3)}`;
@@ -3004,7 +3022,7 @@
                         const changePercent = (change / Math.abs(prevValue) * 100);
                         changeStr = `${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}%`;
                     }
-                    
+
                     changeEl.textContent = changeStr;
                     changeEl.className = `value-change ${change >= 0 ? 'positive' : 'negative'}`;
                 } else {
@@ -3022,7 +3040,7 @@
         function setView(view) {
             currentView = view;
             const grid = document.getElementById('chartsGrid');
-            
+
             grid.classList.remove('view-1', 'view-2', 'view-4');
             grid.classList.add(`view-${view}`);
 
@@ -3036,12 +3054,12 @@
         // Set lookback period
         function setLookback(days) {
             lookbackDays = days;
-            
+
             // Update button states
             document.querySelectorAll('.lookback-btn').forEach(btn => {
                 btn.classList.toggle('active', parseInt(btn.dataset.lookback) === days);
             });
-            
+
             // Rebuild all charts with new lookback
             renderCharts();
         }
@@ -3055,10 +3073,10 @@
         const COUNTRY_GROUPS = {
             all: null, // Will be computed from available data
             g7: ['United_States', 'United_Kingdom', 'Germany', 'France', 'Japan', 'Canada', 'Italy'],
-            asia: ['China', 'Japan', 'India', 'South_Korea', 'Indonesia', 'Taiwan', 'Thailand', 
-                   'Singapore', 'Hong_Kong', 'Vietnam', 'Bangladesh', 'Pakistan', 'Malaysia', 'Philippines'],
-            brics: ['Brazil', 'Russia', 'India', 'China', 'South_Africa', 'United_Arab_Emirates', 
-                    'Saudi_Arabia', 'Argentina', 'Mexico', 'Indonesia']
+            asia: ['China', 'Japan', 'India', 'South_Korea', 'Indonesia', 'Taiwan', 'Thailand',
+                'Singapore', 'Hong_Kong', 'Vietnam', 'Bangladesh', 'Pakistan', 'Malaysia', 'Philippines'],
+            brics: ['Brazil', 'Russia', 'India', 'China', 'South_Africa', 'United_Arab_Emirates',
+                'Saudi_Arabia', 'Argentina', 'Mexico', 'Indonesia']
         };
 
         // Topic groups (main topics that subtopics roll up to)
@@ -3085,13 +3103,13 @@
         // Get the latest date from sentiment data
         function getLastUpdatedDate() {
             let latestDate = null;
-            
+
             // Check both international and domestic data
             const dataSources = [sentimentDataIntl, sentimentDataDomestic];
-            
+
             for (const sentData of dataSources) {
                 if (!sentData) continue;
-                
+
                 for (const topic of Object.keys(sentData)) {
                     for (const country of Object.keys(sentData[topic])) {
                         const entries = sentData[topic][country];
@@ -3108,7 +3126,7 @@
                     }
                 }
             }
-            
+
             return latestDate;
         }
 
@@ -3116,7 +3134,7 @@
         function updateLastUpdatedDisplay() {
             const lastUpdatedEl = document.getElementById('lastUpdated');
             if (!lastUpdatedEl) return;
-            
+
             const lastDate = getLastUpdatedDate();
             if (lastDate) {
                 // Format date nicely
@@ -3133,7 +3151,7 @@
             const countries = new Set();
             const sentData = thematicsDataSource === 'domestic' ? sentimentDataDomestic : sentimentDataIntl;
             if (!sentData) return [];
-            
+
             for (const topic of Object.keys(sentData)) {
                 for (const country of Object.keys(sentData[topic])) {
                     countries.add(country);
@@ -3166,9 +3184,9 @@
         function getAllAvailableSubtopics() {
             const sentData = thematicsDataSource === 'domestic' ? sentimentDataDomestic : sentimentDataIntl;
             if (!sentData || !sentimentTopics) return [];
-            
+
             const result = [];
-            
+
             // For each selected topic group, find its subtopics or use the group itself
             for (const selectedGroup of thematicsSelectedTopics) {
                 // Find all subtopics for this group (topics with dash that start with this group)
@@ -3176,7 +3194,7 @@
                     const topicGroup = getTopicGroup(topic);
                     return topicGroup === selectedGroup && topic.includes('-');
                 });
-                
+
                 if (groupSubtopics.length > 0) {
                     // Has subtopics - add them
                     result.push(...groupSubtopics);
@@ -3187,7 +3205,7 @@
                     }
                 }
             }
-            
+
             return result;
         }
 
@@ -3200,28 +3218,28 @@
         function renderColumnToggles() {
             const container = document.getElementById('columnToggles');
             if (!container) return;
-            
+
             const allSubtopics = getAllAvailableSubtopics();
-            
+
             if (allSubtopics.length === 0) {
                 container.innerHTML = '<span class="column-toggles-empty">Select topic groups above to see columns</span>';
                 return;
             }
-            
+
             let html = '';
             for (const topic of allSubtopics) {
                 const label = getSubtopicLabel(topic);
                 const topicGroup = getTopicGroup(topic);
                 const isHidden = thematicsHiddenColumns.has(topic);
                 const groupTag = topic.includes('-') ? `<span class="topic-group-tag">${topicGroup.split(' ')[0]}</span>` : '';
-                
+
                 html += `<span class="column-toggle ${isHidden ? 'hidden' : ''}" data-topic="${topic}" title="${topic}">
                     ${label} ${groupTag}
                 </span>`;
             }
-            
+
             container.innerHTML = html;
-            
+
             // Add event listeners
             container.querySelectorAll('.column-toggle').forEach(toggle => {
                 toggle.addEventListener('click', () => {
@@ -3242,21 +3260,21 @@
         function computeThematicsSentiment(country, topic) {
             const sentData = thematicsDataSource === 'domestic' ? sentimentDataDomestic : sentimentDataIntl;
             if (!sentData || !sentData[topic]) return null;
-            
+
             const countryData = sentData[topic][country];
             if (!countryData || countryData.length === 0) return null;
-            
+
             // Calculate cutoff date
             const cutoffDate = new Date();
             cutoffDate.setDate(cutoffDate.getDate() - thematicsLookbackDays);
             const cutoffStr = cutoffDate.toISOString().split('T')[0];
-            
+
             let totalSentiment = 0;
             let totalCount = 0;
-            
+
             // Collect data points for gradient calculation
             const dataPoints = [];
-            
+
             // Sum sentiment and count for dates within lookback
             for (const entry of countryData) {
                 if (entry.date >= cutoffStr) {
@@ -3269,16 +3287,16 @@
                     });
                 }
             }
-            
+
             if (totalCount === 0) return null;
-            
+
             // Sort data points by date for gradient calculation
             dataPoints.sort((a, b) => a.date.localeCompare(b.date));
-            
+
             // Calculate gradient (slope) using linear regression
             // Weighted by article count
             const gradient = calculateWeightedGradient(dataPoints);
-            
+
             return {
                 avgSentiment: totalSentiment / totalCount,
                 gradient: gradient,
@@ -3286,45 +3304,45 @@
                 dataPoints: dataPoints
             };
         }
-        
+
         // Calculate weighted linear regression slope
         function calculateWeightedGradient(dataPoints) {
             if (dataPoints.length < 2) return 0;
-            
+
             // Assign x values as day index (0, 1, 2, ...)
             let sumW = 0, sumWX = 0, sumWY = 0, sumWXX = 0, sumWXY = 0;
-            
+
             dataPoints.forEach((point, index) => {
                 const x = index;
                 const y = point.value;
                 const w = point.count; // weight by article count
-                
+
                 sumW += w;
                 sumWX += w * x;
                 sumWY += w * y;
                 sumWXX += w * x * x;
                 sumWXY += w * x * y;
             });
-            
+
             // Weighted linear regression slope formula
             const denominator = sumW * sumWXX - sumWX * sumWX;
             if (denominator === 0) return 0;
-            
+
             const slope = (sumW * sumWXY - sumWX * sumWY) / denominator;
-            
+
             // Normalize slope to make it more interpretable
             // Multiply by number of days to get "change over period"
             const normalizedSlope = slope * (dataPoints.length - 1);
-            
+
             return normalizedSlope;
         }
-        
+
         // Get the display value based on current measure
         function getMeasureValue(data) {
             if (!data) return null;
             return thematicsMeasure === 'direction' ? data.gradient : data.avgSentiment;
         }
-        
+
         // Get measure label for display
         function getMeasureLabel() {
             return thematicsMeasure === 'direction' ? 'Dir' : 'Avg';
@@ -3335,12 +3353,12 @@
             if (thematicsCountryGroup === 'custom') {
                 return thematicsCustomCountries.filter(c => c.trim()).map(c => c.trim());
             }
-            
+
             const groupCountries = COUNTRY_GROUPS[thematicsCountryGroup];
             if (groupCountries) {
                 return groupCountries;
             }
-            
+
             // 'all' - return all available countries
             return getAvailableSentimentCountries();
         }
@@ -3350,17 +3368,17 @@
             const countries = getThematicsCountries();
             const visibleSubtopics = getVisibleSubtopics();
             const data = [];
-            
+
             for (const country of countries) {
                 const row = { country };
                 let hasAnyData = false;
-                
+
                 for (const topic of visibleSubtopics) {
                     const result = computeThematicsSentiment(country, topic);
                     row[topic] = result;
                     if (result) hasAnyData = true;
                 }
-                
+
                 // Only include countries that have at least some data
                 if (hasAnyData) {
                     // Calculate average across all topics for ranking (using selected measure)
@@ -3385,7 +3403,7 @@
                     data.push(row);
                 }
             }
-            
+
             return { data, visibleSubtopics };
         }
 
@@ -3393,10 +3411,10 @@
         function sortThematicsData(data) {
             const col = thematicsSortColumn;
             const isDesc = thematicsSortDirection === 'desc';
-            
+
             return [...data].sort((a, b) => {
                 let valA, valB;
-                
+
                 if (col === 'country') {
                     // Sort by country name alphabetically
                     const nameA = (COUNTRY_NAMES && COUNTRY_NAMES[a.country]) || a.country;
@@ -3412,7 +3430,7 @@
                     valA = (a[col] && getMeasureValue(a[col])) ?? -999;
                     valB = (b[col] && getMeasureValue(b[col])) ?? -999;
                 }
-                
+
                 // Descending: higher values first (valB - valA)
                 // Ascending: lower values first (valA - valB)
                 return isDesc ? (valB - valA) : (valA - valB);
@@ -3440,11 +3458,11 @@
             const headerRow = document.getElementById('thematicsTableHeader');
             const tableBody = document.getElementById('thematicsTableBody');
             const summary = document.getElementById('thematicsSummary');
-            
+
             // Compute data
             const { data: allData, visibleSubtopics } = computeThematicsData();
             currentVisibleSubtopics = visibleSubtopics;
-            
+
             // Sort indicator helper
             const sortIndicator = (col) => {
                 if (thematicsSortColumn === col) {
@@ -3452,9 +3470,9 @@
                 }
                 return '<span class="sort-indicator">▼</span>';
             };
-            
+
             const sortedClass = (col) => thematicsSortColumn === col ? 'sorted' : '';
-            
+
             // Build header with clickable columns
             let headerHTML = `<th class="${sortedClass('country')}" data-sort="country">Country${sortIndicator('country')}</th>`;
             for (const topic of visibleSubtopics) {
@@ -3463,7 +3481,7 @@
             }
             headerHTML += `<th class="${sortedClass('avg')}" data-sort="avg">${getMeasureLabel()}${sortIndicator('avg')}</th>`;
             headerRow.innerHTML = headerHTML;
-            
+
             // Add click handlers to headers
             headerRow.querySelectorAll('th').forEach(th => {
                 th.addEventListener('click', () => {
@@ -3471,67 +3489,67 @@
                     if (sortCol) handleColumnSort(sortCol);
                 });
             });
-            
+
             // Sort data
             const sortedData = sortThematicsData(allData);
-            
+
             // Get top N and bottom N from sorted data
             const topN = Math.min(thematicsTopN, Math.floor(sortedData.length / 2));
             const topCountries = sortedData.slice(0, topN);
             const bottomCountries = sortedData.slice(-topN);
-            
+
             // Update summary
             const allSubtopics = getAllAvailableSubtopics();
             const hiddenCount = allSubtopics.length - visibleSubtopics.length;
             const hiddenText = hiddenCount > 0 ? ` (${hiddenCount} hidden)` : '';
-            const sortColName = thematicsSortColumn === 'avg' ? 'Average' : 
-                               thematicsSortColumn === 'country' ? 'Country' : 
-                               getSubtopicLabel(thematicsSortColumn);
+            const sortColName = thematicsSortColumn === 'avg' ? 'Average' :
+                thematicsSortColumn === 'country' ? 'Country' :
+                    getSubtopicLabel(thematicsSortColumn);
             const sortText = `sorted by ${sortColName} ${thematicsSortDirection === 'desc' ? '↓' : '↑'}`;
             const thresholdText = thematicsMinArticles > 1 ? ` | min ${thematicsMinArticles} articles` : '';
             summary.textContent = `Top ${topN} & bottom ${topN} of ${sortedData.length} | ${visibleSubtopics.length} cols${hiddenText} | ${sortText} | ${thematicsDataSource} | ${thematicsLookbackDays}d${thresholdText}`;
-            
+
             // Build table body
             let bodyHTML = '';
             const colSpan = visibleSubtopics.length + 2;
-            
+
             // Top section header
             bodyHTML += `<tr><td colspan="${colSpan}" class="top-section-header">Top ${topN}</td></tr>`;
-            
+
             // Top countries
             for (const row of topCountries) {
                 bodyHTML += renderThematicsRow(row, visibleSubtopics);
             }
-            
+
             // Separator
             bodyHTML += `<tr><td colspan="${colSpan}" class="section-separator"></td></tr>`;
-            
+
             // Bottom section header
             bodyHTML += `<tr><td colspan="${colSpan}" class="bottom-section-header">Bottom ${topN}</td></tr>`;
-            
+
             // Bottom countries
             for (const row of bottomCountries) {
                 bodyHTML += renderThematicsRow(row, visibleSubtopics);
             }
-            
+
             tableBody.innerHTML = bodyHTML;
         }
 
         // Export thematics table to CSV
         function exportThematicsTableToCsv() {
             const { data: allData, visibleSubtopics } = computeThematicsData();
-            
+
             if (allData.length === 0 || visibleSubtopics.length === 0) {
                 alert('No data to export');
                 return;
             }
-            
+
             // Sort and slice data same as table display
             const sortedData = sortThematicsData(allData);
             const topN = thematicsTopN;
             const topCountries = sortedData.slice(0, topN);
             const bottomCountries = sortedData.slice(-topN);
-            
+
             // Combine top and bottom (avoiding duplicates if total < topN*2)
             const seenCountries = new Set(topCountries.map(r => r.country));
             const exportData = [...topCountries];
@@ -3540,18 +3558,18 @@
                     exportData.push(row);
                 }
             }
-            
+
             // Build CSV header
             const headers = ['Country', ...visibleSubtopics, 'Average'];
             let csv = headers.map(h => `"${h}"`).join(',') + '\n';
-            
+
             // Build CSV rows
             for (const row of exportData) {
-                const countryName = (typeof COUNTRY_NAMES !== 'undefined' && COUNTRY_NAMES[row.country]) 
+                const countryName = (typeof COUNTRY_NAMES !== 'undefined' && COUNTRY_NAMES[row.country])
                     ? COUNTRY_NAMES[row.country] : row.country.replace(/_/g, ' ');
-                
+
                 const values = [countryName];
-                
+
                 for (const topic of visibleSubtopics) {
                     const data = row[topic];
                     if (data) {
@@ -3561,25 +3579,25 @@
                         values.push('');
                     }
                 }
-                
+
                 values.push((row.avgMeasure || 0).toFixed(thematicsDecimalPlaces));
-                
+
                 csv += values.map(v => `"${v}"`).join(',') + '\n';
             }
-            
+
             // Create and trigger download
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
-            
+
             // Generate filename with date
             const date = new Date().toISOString().split('T')[0];
-            const lookbackLabel = thematicsLookbackDays === 1 ? '1d' : 
-                                  thematicsLookbackDays === 7 ? '1w' : 
-                                  thematicsLookbackDays === 30 ? '1m' : '3m';
+            const lookbackLabel = thematicsLookbackDays === 1 ? '1d' :
+                thematicsLookbackDays === 7 ? '1w' :
+                    thematicsLookbackDays === 30 ? '1m' : '3m';
             link.setAttribute('download', `thematics_sentiment_${lookbackLabel}_${date}.csv`);
-            
+
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
@@ -3589,13 +3607,13 @@
 
         // Render a single row
         function renderThematicsRow(row, activeSubtopics) {
-            const flag = (typeof COUNTRY_FLAGS !== 'undefined' && COUNTRY_FLAGS[row.country]) 
+            const flag = (typeof COUNTRY_FLAGS !== 'undefined' && COUNTRY_FLAGS[row.country])
                 ? COUNTRY_FLAGS[row.country] : '';
-            const name = (typeof COUNTRY_NAMES !== 'undefined' && COUNTRY_NAMES[row.country]) 
+            const name = (typeof COUNTRY_NAMES !== 'undefined' && COUNTRY_NAMES[row.country])
                 ? COUNTRY_NAMES[row.country] : row.country.replace(/_/g, ' ');
-            
+
             let html = `<tr><td><span class="country-flag">${flag}</span>${name}</td>`;
-            
+
             for (const topic of activeSubtopics) {
                 const data = row[topic];
                 if (data) {
@@ -3605,10 +3623,10 @@
                     const displayVal = (measureVal >= 0 ? '+' : '') + measureVal.toFixed(thematicsDecimalPlaces);
                     const countDisplay = thematicsShowCounts ? `<span class="sentiment-count">${data.count}</span>` : '';
                     const confidenceClass = meetsThreshold ? 'clickable' : 'low-confidence';
-                    const titleText = meetsThreshold 
+                    const titleText = meetsThreshold
                         ? `Click to see daily breakdown\n${topic}\nCount: ${data.count}`
                         : `Below threshold (${data.count} < ${thematicsMinArticles} articles)\n${topic}`;
-                    
+
                     html += `<td><span class="sentiment-cell ${cssClass} ${confidenceClass}" 
                         data-country="${row.country}" 
                         data-topic="${topic}" 
@@ -3620,13 +3638,13 @@
                     html += `<td><span class="sentiment-cell no-data">-</span></td>`;
                 }
             }
-            
+
             // Average column (no count for average)
             const avgMeasure = row.avgMeasure || 0;
             const avgClass = avgMeasure > 0.05 ? 'positive' : (avgMeasure < -0.05 ? 'negative' : 'neutral');
             const avgDisplay = (avgMeasure >= 0 ? '+' : '') + avgMeasure.toFixed(thematicsDecimalPlaces);
             html += `<td><span class="sentiment-cell ${avgClass}"><strong>${avgDisplay}</strong></span></td>`;
-            
+
             html += '</tr>';
             return html;
         }
@@ -3639,40 +3657,40 @@
         function showSentimentDetail(country, topic, summaryData) {
             const panel = document.getElementById('sentimentDetailPanel');
             const sentData = thematicsDataSource === 'domestic' ? sentimentDataDomestic : sentimentDataIntl;
-            
+
             if (!sentData || !sentData[topic] || !sentData[topic][country]) {
                 console.error('No data found for', country, topic);
                 return;
             }
-            
+
             // Get daily data for the selected period
             const rawData = sentData[topic][country];
             const cutoffDate = new Date();
             cutoffDate.setDate(cutoffDate.getDate() - thematicsLookbackDays);
             const cutoffStr = cutoffDate.toISOString().split('T')[0];
-            
+
             // Filter and sort data - ensure we have valid values
             const dailyData = rawData
                 .filter(d => d.date >= cutoffStr && d.value !== null && d.value !== undefined)
                 .sort((a, b) => a.date.localeCompare(b.date));
-            
+
             if (dailyData.length === 0) {
                 console.warn('No data in selected period for', country, topic);
                 return;
             }
-            
+
             // Update panel info
             const flag = (typeof COUNTRY_FLAGS !== 'undefined' && COUNTRY_FLAGS[country]) ? COUNTRY_FLAGS[country] : '';
-            const countryName = (typeof COUNTRY_NAMES !== 'undefined' && COUNTRY_NAMES[country]) 
+            const countryName = (typeof COUNTRY_NAMES !== 'undefined' && COUNTRY_NAMES[country])
                 ? COUNTRY_NAMES[country] : country.replace(/_/g, ' ');
             const topicLabel = getSubtopicLabel(topic);
-            
+
             document.getElementById('detailCountryFlag').textContent = flag;
-            
+
             // Update title based on measure
             const measureLabel = thematicsMeasure === 'direction' ? 'Sentiment Direction' : 'Daily Sentiment';
             document.getElementById('detailTitle').textContent = `${countryName} - ${topicLabel}`;
-            
+
             // Show appropriate value based on measure
             const displayValue = thematicsMeasure === 'direction' ? summaryData.gradient : summaryData.avgSentiment;
             const avgClass = displayValue > 0.05 ? 'positive' : (displayValue < -0.05 ? 'negative' : 'neutral');
@@ -3680,18 +3698,18 @@
             const avgValueEl = document.getElementById('detailAvgValue');
             avgValueEl.textContent = avgDisplay;
             avgValueEl.className = 'stat-value ' + avgClass;
-            
+
             // Update stat label based on measure
-            document.querySelector('#sentimentDetailPanel .sentiment-detail-stat:first-of-type .stat-label').textContent = 
+            document.querySelector('#sentimentDetailPanel .sentiment-detail-stat:first-of-type .stat-label').textContent =
                 thematicsMeasure === 'direction' ? 'Gradient' : 'Period Avg';
-            
+
             document.getElementById('detailArticleCount').textContent = summaryData.count;
-            
-            const periodLabel = thematicsLookbackDays === 1 ? '1 Day' : 
-                               thematicsLookbackDays === 7 ? '1 Week' : 
-                               thematicsLookbackDays === 30 ? '1 Month' : '3 Months';
+
+            const periodLabel = thematicsLookbackDays === 1 ? '1 Day' :
+                thematicsLookbackDays === 7 ? '1 Week' :
+                    thematicsLookbackDays === 30 ? '1 Month' : '3 Months';
             document.getElementById('detailPeriod').textContent = periodLabel;
-            
+
             // Update legend based on measure
             const legendLine = document.querySelector('#legendRefLine .legend-line');
             const legendLabel = document.getElementById('legendRefLabel');
@@ -3702,10 +3720,10 @@
                 legendLine.className = 'legend-line average';
                 legendLabel.textContent = 'Period Average';
             }
-            
+
             // Show panel first (Chart.js needs visible canvas)
             panel.classList.add('active');
-            
+
             // Create chart after panel is visible (use setTimeout to ensure DOM update)
             setTimeout(() => {
                 createSentimentDetailChart(dailyData, summaryData);
@@ -3717,29 +3735,29 @@
         // Create the sentiment detail chart
         function createSentimentDetailChart(dailyData, summaryData) {
             const ctx = document.getElementById('sentimentDetailChart').getContext('2d');
-            
+
             // Destroy existing chart
             if (sentimentDetailChart) {
                 sentimentDetailChart.destroy();
             }
-            
+
             // Prepare data - sentiment data uses 'value' field
             const labels = dailyData.map(d => d.date);
             const sentimentValues = dailyData.map(d => d.value);
             const countValues = dailyData.map(d => d.count || 0);
-            
+
             // Color bars based on positive/negative/neutral
-            const barColors = sentimentValues.map(v => 
+            const barColors = sentimentValues.map(v =>
                 v > 0.05 ? 'rgba(34, 197, 94, 0.7)' :  // positive - green
-                v < -0.05 ? 'rgba(239, 68, 68, 0.7)' : // negative - red
-                'rgba(251, 191, 36, 0.7)'              // neutral - yellow
+                    v < -0.05 ? 'rgba(239, 68, 68, 0.7)' : // negative - red
+                        'rgba(251, 191, 36, 0.7)'              // neutral - yellow
             );
-            const barBorderColors = sentimentValues.map(v => 
+            const barBorderColors = sentimentValues.map(v =>
                 v > 0.05 ? 'rgb(34, 197, 94)' :
-                v < -0.05 ? 'rgb(239, 68, 68)' :
-                'rgb(251, 191, 36)'
+                    v < -0.05 ? 'rgb(239, 68, 68)' :
+                        'rgb(251, 191, 36)'
             );
-            
+
             // Calculate min/max for y-axis
             const numericValues = sentimentValues.filter(v => typeof v === 'number' && !isNaN(v));
             let minVal = numericValues.length > 0 ? Math.min(...numericValues) : -1;
@@ -3747,7 +3765,7 @@
             const padding = (maxVal - minVal) * 0.2 || 0.1;
             minVal -= padding;
             maxVal += padding;
-            
+
             // Build datasets
             const datasets = [
                 {
@@ -3759,7 +3777,7 @@
                     borderRadius: 3
                 }
             ];
-            
+
             // For direction measure: add trend line instead of average line
             if (thematicsMeasure === 'direction') {
                 // Calculate trend line using linear regression
@@ -3793,10 +3811,10 @@
                     order: 1
                 });
             }
-            
+
             const yAxisTitle = 'Sentiment';
             const refLabel = thematicsMeasure === 'direction' ? 'Trend Line' : 'Period Average';
-            
+
             sentimentDetailChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -3823,14 +3841,14 @@
                             padding: 12,
                             displayColors: true,
                             callbacks: {
-                                afterLabel: function(context) {
+                                afterLabel: function (context) {
                                     if (context.dataset.label === 'Daily Sentiment') {
                                         const count = countValues[context.dataIndex];
                                         return `Articles: ${count}`;
                                     }
                                     return null;
                                 },
-                                label: function(context) {
+                                label: function (context) {
                                     const val = context.parsed.y;
                                     if (val === null) return null;
                                     const sign = val >= 0 ? '+' : '';
@@ -3860,7 +3878,7 @@
                             },
                             ticks: {
                                 color: '#888',
-                                callback: function(value) {
+                                callback: function (value) {
                                     const sign = value >= 0 ? '+' : '';
                                     return sign + value.toFixed(2);
                                 }
@@ -3877,17 +3895,17 @@
                 plugins: [{
                     // Custom plugin to draw article count on bars
                     id: 'countLabels',
-                    afterDatasetsDraw: function(chart) {
+                    afterDatasetsDraw: function (chart) {
                         const ctx = chart.ctx;
                         const meta = chart.getDatasetMeta(0);
-                        
+
                         if (!meta.data || meta.data.length === 0) return;
-                        
+
                         ctx.save();
                         ctx.font = 'bold 9px Arial';
                         ctx.textAlign = 'center';
                         ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                        
+
                         meta.data.forEach((bar, index) => {
                             const count = countValues[index];
                             if (count > 0) {
@@ -3897,21 +3915,21 @@
                                 ctx.fillText(count.toString(), bar.x, yPos);
                             }
                         });
-                        
+
                         ctx.restore();
                     }
                 }]
             });
         }
-        
+
         // Calculate trend line values for the chart
         function calculateTrendLine(values, weights) {
             const n = values.length;
             if (n < 2) return values;
-            
+
             // Weighted linear regression
             let sumW = 0, sumWX = 0, sumWY = 0, sumWXX = 0, sumWXY = 0;
-            
+
             values.forEach((y, x) => {
                 const w = weights[x] || 1;
                 sumW += w;
@@ -3920,13 +3938,13 @@
                 sumWXX += w * x * x;
                 sumWXY += w * x * y;
             });
-            
+
             const denominator = sumW * sumWXX - sumWX * sumWX;
             if (denominator === 0) return values.map(() => sumWY / sumW);
-            
+
             const slope = (sumW * sumWXY - sumWX * sumWY) / denominator;
             const intercept = (sumWY - slope * sumWX) / sumW;
-            
+
             // Generate trend line values
             return values.map((_, x) => intercept + slope * x);
         }
@@ -3935,13 +3953,13 @@
         function closeSentimentDetail() {
             const panel = document.getElementById('sentimentDetailPanel');
             panel.classList.remove('active');
-            
+
             // Remove selection highlight
             if (selectedSentimentCell) {
                 selectedSentimentCell.classList.remove('selected');
                 selectedSentimentCell = null;
             }
-            
+
             // Destroy chart to free memory
             if (sentimentDetailChart) {
                 sentimentDetailChart.destroy();
@@ -3953,20 +3971,20 @@
         function handleSentimentCellClick(event) {
             const cell = event.target.closest('.sentiment-cell.clickable');
             if (!cell || cell.classList.contains('low-confidence')) return;
-            
+
             const country = cell.dataset.country;
             const topic = cell.dataset.topic;
             const avg = parseFloat(cell.dataset.avg);
             const gradient = parseFloat(cell.dataset.gradient);
             const count = parseInt(cell.dataset.count);
-            
+
             // Update selection highlight
             if (selectedSentimentCell) {
                 selectedSentimentCell.classList.remove('selected');
             }
             cell.classList.add('selected');
             selectedSentimentCell = cell;
-            
+
             // Show detail visualization with all data
             showSentimentDetail(country, topic, {
                 avgSentiment: avg,
@@ -3981,16 +3999,16 @@
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.tab === tabName);
             });
-            
+
             // Update tab content
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.toggle('active', content.id === tabName + 'Tab');
             });
-            
+
             // Show/hide dashboard controls
             const dashboardControls = document.getElementById('dashboardControls');
             dashboardControls.style.display = tabName === 'dashboard' ? 'flex' : 'none';
-            
+
             // Render thematics if switching to that tab
             if (tabName === 'thematics' && sentimentDataIntl) {
                 renderColumnToggles();
@@ -4011,11 +4029,11 @@
             const input = document.getElementById('thematicsCustomCountries');
             const dropdown = document.getElementById('countryAutocomplete');
             const tagsContainer = document.getElementById('selectedCountriesTags');
-            
+
             if (!input || !dropdown || !tagsContainer) return;
-            
+
             let highlightedIndex = -1;
-            
+
             // Render selected country tags
             function renderSelectedTags() {
                 tagsContainer.innerHTML = thematicsCustomCountries.map(code => {
@@ -4026,7 +4044,7 @@
                         <span class="remove-tag" data-code="${code}">×</span>
                     </span>`;
                 }).join('');
-                
+
                 // Add remove handlers
                 tagsContainer.querySelectorAll('.remove-tag').forEach(btn => {
                     btn.addEventListener('click', (e) => {
@@ -4038,24 +4056,24 @@
                     });
                 });
             }
-            
+
             // Show autocomplete suggestions
             function showSuggestions(query) {
                 const allCountries = getAllCountryCodes();
                 const queryLower = query.toLowerCase();
-                
+
                 const matches = allCountries.filter(code => {
                     if (thematicsCustomCountries.includes(code)) return false;
                     const name = (COUNTRY_NAMES && COUNTRY_NAMES[code]) || code;
-                    return name.toLowerCase().includes(queryLower) || 
-                           code.toLowerCase().includes(queryLower);
+                    return name.toLowerCase().includes(queryLower) ||
+                        code.toLowerCase().includes(queryLower);
                 }).slice(0, 10); // Limit to 10 suggestions
-                
+
                 if (matches.length === 0 || query.length === 0) {
                     dropdown.classList.remove('active');
                     return;
                 }
-                
+
                 dropdown.innerHTML = matches.map((code, idx) => {
                     const name = (COUNTRY_NAMES && COUNTRY_NAMES[code]) || code.replace(/_/g, ' ');
                     const flag = (COUNTRY_FLAGS && COUNTRY_FLAGS[code]) || '';
@@ -4065,10 +4083,10 @@
                         <span class="country-code">${code}</span>
                     </div>`;
                 }).join('');
-                
+
                 dropdown.classList.add('active');
                 highlightedIndex = -1;
-                
+
                 // Add click handlers
                 dropdown.querySelectorAll('.country-autocomplete-item').forEach(item => {
                     item.addEventListener('click', () => {
@@ -4076,7 +4094,7 @@
                     });
                 });
             }
-            
+
             // Select a country
             function selectCountry(code) {
                 if (!thematicsCustomCountries.includes(code)) {
@@ -4087,21 +4105,21 @@
                 input.value = '';
                 dropdown.classList.remove('active');
             }
-            
+
             // Input event handlers
             input.addEventListener('input', (e) => {
                 showSuggestions(e.target.value);
             });
-            
+
             input.addEventListener('focus', () => {
                 if (input.value.length > 0) {
                     showSuggestions(input.value);
                 }
             });
-            
+
             input.addEventListener('keydown', (e) => {
                 const items = dropdown.querySelectorAll('.country-autocomplete-item');
-                
+
                 if (e.key === 'ArrowDown') {
                     e.preventDefault();
                     highlightedIndex = Math.min(highlightedIndex + 1, items.length - 1);
@@ -4119,20 +4137,20 @@
                     dropdown.classList.remove('active');
                 }
             });
-            
+
             function updateHighlight(items) {
                 items.forEach((item, idx) => {
                     item.classList.toggle('highlighted', idx === highlightedIndex);
                 });
             }
-            
+
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
                 if (!input.contains(e.target) && !dropdown.contains(e.target)) {
                     dropdown.classList.remove('active');
                 }
             });
-            
+
             // Initial render of tags
             renderSelectedTags();
         }
@@ -4145,14 +4163,14 @@
                 closeSentimentDetail(); // Close detail panel as data context changes
                 renderThematicsTable();
             });
-            
+
             // Top N input
             document.getElementById('thematicsTopN')?.addEventListener('change', (e) => {
                 thematicsTopN = Math.max(1, Math.min(50, parseInt(e.target.value) || 10));
                 e.target.value = thematicsTopN;
                 renderThematicsTable();
             });
-            
+
             // Country group select
             document.getElementById('thematicsCountryGroup')?.addEventListener('change', (e) => {
                 thematicsCountryGroup = e.target.value;
@@ -4162,10 +4180,10 @@
                 }
                 renderThematicsTable();
             });
-            
+
             // Custom countries autocomplete
             initCountryAutocomplete();
-            
+
             // Show counts toggle button
             document.getElementById('showCountsBtn')?.addEventListener('click', (e) => {
                 thematicsShowCounts = !thematicsShowCounts;
@@ -4173,24 +4191,24 @@
                 e.target.textContent = thematicsShowCounts ? 'Hide Counts' : 'Show Counts';
                 renderThematicsTable();
             });
-            
+
             // Decimal places select
             document.getElementById('decimalPlacesSelect')?.addEventListener('change', (e) => {
                 thematicsDecimalPlaces = parseInt(e.target.value, 10);
                 renderThematicsTable();
             });
-            
+
             // Export CSV button
             document.getElementById('exportCsvBtn')?.addEventListener('click', () => {
                 exportThematicsTableToCsv();
             });
-            
+
             // Sentiment cell click handler (event delegation on table body)
             document.getElementById('thematicsTableBody')?.addEventListener('click', handleSentimentCellClick);
-            
+
             // Close button for sentiment detail panel
             document.getElementById('detailCloseBtn')?.addEventListener('click', closeSentimentDetail);
-            
+
             // Data source toggle
             document.querySelectorAll('.data-source-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -4203,7 +4221,7 @@
                     renderThematicsTable();
                 });
             });
-            
+
             // Measure toggle
             document.querySelectorAll('.measure-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -4215,7 +4233,7 @@
                     renderThematicsTable();
                 });
             });
-            
+
             // Min articles threshold slider
             const minArticlesSlider = document.getElementById('minArticlesSlider');
             const minArticlesValue = document.getElementById('minArticlesValue');
@@ -4229,14 +4247,14 @@
                     renderThematicsTable();
                 });
             }
-            
+
             // Topic checkboxes
             document.querySelectorAll('.topic-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('click', (e) => {
                     e.preventDefault(); // Prevent default checkbox behavior
                     const topic = checkbox.dataset.topic;
                     const isActive = checkbox.classList.contains('active');
-                    
+
                     if (isActive) {
                         // Deactivate
                         checkbox.classList.remove('active');
@@ -4250,18 +4268,18 @@
                             thematicsSelectedTopics.push(topic);
                         }
                     }
-                    
+
                     // Re-order to match TOPIC_GROUPS order
-                    thematicsSelectedTopics.sort((a, b) => 
+                    thematicsSelectedTopics.sort((a, b) =>
                         TOPIC_GROUPS.indexOf(a) - TOPIC_GROUPS.indexOf(b)
                     );
-                    
+
                     // Update column toggles and table
                     renderColumnToggles();
                     renderThematicsTable();
                 });
             });
-            
+
             // Tab navigation
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -4289,4 +4307,5 @@
         });
     </script>
 </body>
+
 </html>
