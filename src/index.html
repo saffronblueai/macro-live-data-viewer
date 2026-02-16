@@ -476,7 +476,8 @@
             color: #fbbf24;
         }
 
-        .data-type-label.sentiment {
+        .data-type-label.sentiment,
+        .data-type-label.sentiment_only {
             background: rgba(236, 72, 153, 0.2);
             color: #f472b6;
         }
@@ -1847,6 +1848,14 @@
                 formatValue: (v) => v.toLocaleString('en-US', {maximumFractionDigits: 2}),
                 formatTooltip: (v) => `Index: ${v.toLocaleString('en-US', {maximumFractionDigits: 2})}`,
                 formatAxis: (v) => v >= 1000 ? (v/1000).toFixed(0) + 'K' : v.toFixed(0)
+            },
+            sentiment_only: {
+                name: 'Sentiment Only',
+                unit: '',
+                decimals: 3,
+                formatValue: (v) => v.toFixed(3),
+                formatTooltip: (v) => `Sentiment: ${v.toFixed(3)}`,
+                formatAxis: (v) => v.toFixed(1)
             }
         };
 
@@ -1996,6 +2005,17 @@
 
         // Get available countries for a data type
         function getAvailableCountries(dataType) {
+            if (dataType === 'sentiment_only') {
+                const countries = new Set();
+                [sentimentDataIntl, sentimentDataDomestic].forEach(src => {
+                    if (src) {
+                        Object.values(src).forEach(topicData => {
+                            Object.keys(topicData).forEach(c => countries.add(c));
+                        });
+                    }
+                });
+                return Array.from(countries).sort();
+            }
             if (!allData || !allData[dataType]) return [];
             return Object.keys(allData[dataType]).filter(c => 
                 allData[dataType][c] && allData[dataType][c].length > 0
@@ -2019,6 +2039,7 @@
         // Get data type label with ticker code
         function getDataTypeLabel(dataType, country) {
             const config = DATA_TYPES[dataType];
+            if (dataType === 'sentiment_only') return 'Sentiment Only';
             const tickers = COUNTRY_TICKERS[country];
             if (tickers) {
                 if (dataType === 'currencies' && tickers.currency) {
@@ -2032,6 +2053,7 @@
 
         // Get main data for chart (filtered by lookback period)
         function getMainData(state) {
+            if (state.dataType === 'sentiment_only') return [];
             const data = (allData[state.dataType] && allData[state.dataType][state.country]) || [];
             if (data.length === 0) return [];
             
@@ -2154,6 +2176,7 @@
         const MIN_DATAPOINTS_FOR_SUGGESTION = 40; // Minimum aligned data points required for statistical significance
         
         function getSentimentSuggestions(state) {
+            if (state.dataType === 'sentiment_only') return [];
             const mainData = getMainData(state);
             if (mainData.length < MIN_DATAPOINTS_FOR_SUGGESTION) return [];
             
@@ -2304,7 +2327,7 @@
                                 ${buildCountryDropdownHTML(availableCountries, state.country)}
                             </select>
                         </div>
-                        <div class="value-info">
+                        <div class="value-info" id="value-info-${index}" style="${state.dataType === 'sentiment_only' ? 'display:none' : ''}">
                             <span class="data-type-label ${state.dataType}" id="type-label-${index}">
                                 ${getDataTypeLabel(state.dataType, state.country)}
                             </span>
@@ -2322,13 +2345,13 @@
                         <canvas id="chart-${index}"></canvas>
                     </div>
                     <div class="legend-row" id="legend-row-${index}">
-                        <div class="legend-item">
+                        <div class="legend-item" id="legend-main-item-${index}" style="${state.dataType === 'sentiment_only' ? 'display:none' : ''}">
                             <div class="legend-color" style="background: ${MAIN_COLOR.line}"></div>
                             <span id="legend-main-${index}">${DATA_TYPES[state.dataType].name}</span>
                         </div>
                         ${sentimentLegendHTML}
                     </div>
-                    <div class="sentiment-suggestions" id="suggestions-${index}">
+                    <div class="sentiment-suggestions" id="suggestions-${index}" style="${state.dataType === 'sentiment_only' ? 'display:none' : ''}">
                         <div class="suggestions-label">Best sentiment fits:</div>
                         <div class="suggestions-row" id="suggestions-row-${index}">
                             <!-- Suggestions populated dynamically -->
@@ -2365,8 +2388,15 @@
                 select.addEventListener('change', (e) => {
                     const index = parseInt(e.target.dataset.index);
                     tileStates[index].dataType = e.target.value;
+                    const isSentOnly = e.target.value === 'sentiment_only';
+                    const valueInfo = document.getElementById(`value-info-${index}`);
+                    const mainLegendItem = document.getElementById(`legend-main-item-${index}`);
+                    const suggestionsEl = document.getElementById(`suggestions-${index}`);
+                    if (valueInfo) valueInfo.style.display = isSentOnly ? 'none' : '';
+                    if (mainLegendItem) mainLegendItem.style.display = isSentOnly ? 'none' : '';
+                    if (suggestionsEl) suggestionsEl.style.display = isSentOnly ? 'none' : '';
                     updateCountryDropdown(index);
-                    rebuildChart(index, true); // Update suggestions when data type changes
+                    rebuildChart(index, true);
                 });
             });
 
@@ -2599,6 +2629,7 @@
             const state = tileStates[index];
             const config = DATA_TYPES[state.dataType];
             const mainData = getMainData(state);
+            const isSentimentOnly = state.dataType === 'sentiment_only';
             
             // Get all sentiment data arrays
             const sentimentDataArrays = state.sentiments
@@ -2613,6 +2644,18 @@
 
             const ctx = document.getElementById(`chart-${index}`).getContext('2d');
 
+            // Determine chart dates: use main data dates, or sentiment dates for sentiment-only mode
+            let chartDates;
+            if (mainData.length > 0) {
+                chartDates = mainData.map(d => d.date);
+            } else if (sentimentDataArrays.length > 0) {
+                const allDates = new Set();
+                sentimentDataArrays.forEach(s => s.data.forEach(d => allDates.add(d.date)));
+                chartDates = Array.from(allDates).sort();
+            } else {
+                chartDates = [];
+            }
+
             // Build datasets - sentiment areas first (so main line renders on top)
             const datasets = [];
 
@@ -2622,11 +2665,11 @@
                 const sentimentMap = {};
                 sentObj.data.forEach(d => { sentimentMap[d.date] = d.value; });
                 
-                // Align sentiment data to main data dates, carrying forward last known value
+                // Align sentiment data to chart dates, carrying forward last known value
                 let lastKnownValue = 0;
-                const alignedSentiment = mainData.map(d => {
-                    if (sentimentMap[d.date] !== undefined) {
-                        lastKnownValue = sentimentMap[d.date];
+                const alignedSentiment = chartDates.map(date => {
+                    if (sentimentMap[date] !== undefined) {
+                        lastKnownValue = sentimentMap[date];
                     }
                     return lastKnownValue;
                 });
@@ -2635,32 +2678,34 @@
                     label: sentObj.sentiment.topic,
                     data: alignedSentiment,
                     borderColor: sentObj.color.line,
-                    backgroundColor: sentObj.color.bg.replace('0.1', '0.5'), // Semi-transparent for stacked area
-                    fill: idx === 0 ? 'origin' : '-1', // Stack on previous dataset
+                    backgroundColor: sentObj.color.bg.replace('0.1', '0.5'),
+                    fill: idx === 0 ? 'origin' : '-1',
                     tension: 0.4,
                     pointRadius: 0,
                     pointHoverRadius: 0,
-                    borderWidth: 1,
-                    yAxisID: 'y1',
+                    borderWidth: isSentimentOnly ? 2 : 1,
+                    yAxisID: isSentimentOnly ? 'y' : 'y1',
                     stack: 'sentiment',
-                    order: 2 // Draw before main line
+                    order: 2
                 });
             });
 
-            // Add main data line last (renders on top)
-            datasets.push({
-                label: config.name,
-                data: mainData.map(d => d.value),
-                borderColor: MAIN_COLOR.line,
-                backgroundColor: 'transparent',
-                fill: false,
-                tension: 0.4,
-                pointRadius: 0,
-                pointHoverRadius: 0,
-                borderWidth: 2,
-                yAxisID: 'y',
-                order: 1 // Draw on top
-            });
+            // Add main data line only if not sentiment-only mode
+            if (!isSentimentOnly) {
+                datasets.push({
+                    label: config.name,
+                    data: mainData.map(d => d.value),
+                    borderColor: MAIN_COLOR.line,
+                    backgroundColor: 'transparent',
+                    fill: false,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 0,
+                    borderWidth: 2,
+                    yAxisID: 'y',
+                    order: 1
+                });
+            }
 
             // Build scales
             const scales = {
@@ -2674,8 +2719,27 @@
                         maxTicksAuto: 6,
                         maxRotation: 0
                     }
-                },
-                y: {
+                }
+            };
+
+            if (isSentimentOnly) {
+                // In sentiment-only mode, use left Y-axis for sentiment
+                scales.y = {
+                    position: 'left',
+                    stacked: true,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#f472b6',
+                        callback: function(value) {
+                            return value.toFixed(1);
+                        }
+                    }
+                };
+            } else {
+                scales.y = {
                     position: 'left',
                     grid: {
                         color: 'rgba(255, 255, 255, 0.05)',
@@ -2687,30 +2751,30 @@
                             return config.formatAxis(value);
                         }
                     }
-                }
-            };
-
-            // Add right Y-axis for stacked sentiment areas
-            if (sentimentDataArrays.length > 0) {
-                scales.y1 = {
-                    position: 'right',
-                    stacked: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        color: '#f472b6',
-                        callback: function(value) {
-                            return value.toFixed(1);
-                        }
-                    }
                 };
+
+                // Add right Y-axis for stacked sentiment areas
+                if (sentimentDataArrays.length > 0) {
+                    scales.y1 = {
+                        position: 'right',
+                        stacked: true,
+                        grid: {
+                            drawOnChartArea: false
+                        },
+                        ticks: {
+                            color: '#f472b6',
+                            callback: function(value) {
+                                return value.toFixed(1);
+                            }
+                        }
+                    };
+                }
             }
 
             charts[index] = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: mainData.map(d => d.date),
+                    labels: chartDates,
                     datasets: datasets
                 },
                 options: {
@@ -2737,6 +2801,9 @@
                                     const val = context.parsed.y;
                                     if (val === null) return null;
                                     
+                                    if (isSentimentOnly) {
+                                        return `${context.dataset.label}: ${val.toFixed(3)}`;
+                                    }
                                     // Check if this is the main data (uses y axis) or sentiment (uses y1)
                                     if (context.dataset.yAxisID === 'y') {
                                         return config.formatTooltip(val);
